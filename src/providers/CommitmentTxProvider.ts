@@ -30,7 +30,10 @@ export class CommitmentTxProvider {
     return CommitmentTxProvider._provider;
   };
 
-  get = async (key: string): Promise<CommitmentTx[]> => CommitmentTxProvider._dbProvider.get<CommitmentTx[]>(key);
+  get = async (key: string): Promise<CommitmentTx[]> => {
+    const result = await CommitmentTxProvider._dbProvider.get<CommitmentTx[]>(key);
+    return result || [];
+  };
   put = async (key: string, value: CommitmentTx[]): Promise<void> => CommitmentTxProvider._dbProvider.put<CommitmentTx[]>(key, value);
   getMany = async (limit = 10, reverse = true): Promise<{ key: string; val: CommitmentTx[] }[]> => CommitmentTxProvider._dbProvider.getMany<CommitmentTx[]>(limit, reverse);
 }

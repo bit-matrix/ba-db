@@ -30,7 +30,7 @@ export class AssetBlockHeightProvider {
     return AssetBlockHeightProvider._provider;
   };
 
-  get = async (key: string): Promise<AssetBlockheight> => AssetBlockHeightProvider._dbProvider.get<AssetBlockheight>(key);
+  get = async (key: string): Promise<AssetBlockheight | undefined> => AssetBlockHeightProvider._dbProvider.get<AssetBlockheight>(key);
   put = async (key: string, value: AssetBlockheight): Promise<void> => AssetBlockHeightProvider._dbProvider.put<AssetBlockheight>(key, value);
   getMany = async (limit = 10, reverse = true): Promise<{ key: string; val: AssetBlockheight }[]> => AssetBlockHeightProvider._dbProvider.getMany<AssetBlockheight>(limit, reverse);
 }

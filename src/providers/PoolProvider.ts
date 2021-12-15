@@ -30,7 +30,7 @@ export class PoolProvider {
     return PoolProvider._provider;
   };
 
-  get = async (key: string): Promise<Pool> => PoolProvider._dbProvider.get<Pool>(key);
+  get = async (key: string): Promise<Pool | undefined> => PoolProvider._dbProvider.get<Pool>(key);
   put = async (key: string, value: Pool): Promise<void> => PoolProvider._dbProvider.put<Pool>(key, value);
   getMany = async (limit = 10, reverse = true): Promise<{ key: string; val: Pool }[]> => PoolProvider._dbProvider.getMany<Pool>(limit, reverse);
 }

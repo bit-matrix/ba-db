@@ -1,8 +1,7 @@
 import rocksdb from "rocksdb";
+import { DATA_DIR } from "../env";
 import { PoolTx } from "../models/PoolTx";
 import { RocksDbProvider } from "./RocksDbProvider";
-
-const DATA_DIR: string = process.env.DATA_DIR || "/ba-db/data-dir/";
 
 export class PoolTxProvider {
   private location: string = DATA_DIR + "asset_ptx_43a2f4ef8ce286e57ab3e39e6da3741382ba542854a1b28231a7a5b8ba337fcd";

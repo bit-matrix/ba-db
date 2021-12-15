@@ -6,6 +6,10 @@ docker build -t ba-db .
 
 docker run -d -p 8899:8899 ba-db
 
+## run
+
+docker run -it -p 8899:8899 ba-db
+
 ## image list
 
 docker image ls

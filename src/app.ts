@@ -1,9 +1,8 @@
 import http from "http";
 import express from "express";
-import { POOLS } from "./data";
-
-const DATA_DIR: string = process.env.DATA_DIR || "/ba-db/data-dir/";
-const LISTEN_PORT: number = Number(process.env.PORT || 8899);
+import { PoolProvider } from "./providers/PoolProvider";
+import { initialDatas } from "./initialDatas";
+import { DATA_DIR, LISTEN_PORT } from "./env";
 
 const onExit = async () => {
   console.log("BA DB Service stopped.");
@@ -24,11 +23,14 @@ app.get("/", async (req, res) => {
 });
 
 app.get("/pools", async (req, res) => {
-  const result = POOLS;
+  const provider = await PoolProvider.getProvider();
+  const result = await provider.getMany();
   res.send(result);
 });
 
-server.listen(LISTEN_PORT, () => {
-  console.log("BA DB Service is using DATA_DIR:" + DATA_DIR);
-  console.log("BA DB Service started on *:" + LISTEN_PORT);
+initialDatas().then(() => {
+  server.listen(LISTEN_PORT, () => {
+    console.log("BA DB Service is using DATA_DIR:" + DATA_DIR);
+    console.log("BA DB Service started on *:" + LISTEN_PORT);
+  });
 });

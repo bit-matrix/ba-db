@@ -1,8 +1,7 @@
 import rocksdb from "rocksdb";
+import { DATA_DIR } from "../env";
 import { AssetBlockheight } from "../models/AssetBlockheight";
 import { RocksDbProvider } from "./RocksDbProvider";
-
-const DATA_DIR: string = process.env.DATA_DIR || "/ba-db/data-dir/";
 
 export class AssetBlockHeightProvider {
   private location: string = DATA_DIR + "asset_blockheight";

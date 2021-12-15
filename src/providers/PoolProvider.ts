@@ -1,16 +1,15 @@
 import rocksdb from "rocksdb";
+import { DATA_DIR } from "../env";
 import { Pool } from "../models/Pool";
 import { RocksDbProvider } from "./RocksDbProvider";
 
-const DATA_DIR: string = process.env.DATA_DIR || "/ba-db/data-dir/";
-
 export class PoolProvider {
-  private location: string = DATA_DIR + "pool";
+  private static location: string = DATA_DIR + "pool";
   private static _dbProvider: RocksDbProvider;
   private static _provider: PoolProvider;
   private constructor() {}
 
-  public getProvider = async (): Promise<PoolProvider> => {
+  public static getProvider = async (): Promise<PoolProvider> => {
     if (PoolProvider._provider === undefined) {
       const db = rocksdb(this.location);
 

@@ -1,8 +1,7 @@
 import rocksdb from "rocksdb";
+import { DATA_DIR } from "../env";
 import { CommitmentTx } from "../models/CommitmentTx";
 import { RocksDbProvider } from "./RocksDbProvider";
-
-const DATA_DIR: string = process.env.DATA_DIR || "/ba-db/data-dir/";
 
 export class CommitmentTxProvider {
   private location: string = DATA_DIR + "asset_ctx_43a2f4ef8ce286e57ab3e39e6da3741382ba542854a1b28231a7a5b8ba337fcd";

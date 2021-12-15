@@ -31,7 +31,17 @@ export class CommitmentTxActiveProvider {
   };
 
   get = async (key: string): Promise<CommitmentTx | undefined> => CommitmentTxActiveProvider._dbProvider.get<CommitmentTx>(key);
-  put = async (key: string, value: CommitmentTx): Promise<void> => CommitmentTxActiveProvider._dbProvider.put<CommitmentTx>(key, value);
+  private del = async (key: string): Promise<void> => CommitmentTxActiveProvider._dbProvider.del(key);
+  put = async (key: string, value: CommitmentTx): Promise<void> => {
+    // filter unspent txs
+    const unspentTxs = value.txs.filter((tx) => tx.spendTxId === "");
+
+    // if all ctxs of block spent, del this data from active table
+    if (unspentTxs.length === 0) return this.del(key);
+
+    // has unspent txs, add or update it
+    CommitmentTxActiveProvider._dbProvider.put<CommitmentTx>(key, { ...value, txs: unspentTxs });
+  };
   getMany = async (limit = 10, reverse = true): Promise<CommitmentTx[]> => {
     const result = await CommitmentTxActiveProvider._dbProvider.getMany<CommitmentTx>(limit, reverse);
     return result.map((r) => r.val) || [];

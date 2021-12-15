@@ -14,7 +14,7 @@ export const POOLS: Pool[] = [
  *
  * one file.
  * datas for each POOLS:
- * "pools" // { key: Pool.asset, val: Pool }
+ * "pool" // { key: Pool.asset, val: Pool }
  *
  * one file.
  * datas for each POOLS:

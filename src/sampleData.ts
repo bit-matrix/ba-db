@@ -19,7 +19,7 @@ const sample_CommitmentTxData: CommitmentTxData = {
  * datas for each POOLS:
  * "pools" // { key: Pool.asset, val: Pool }
  */
-const pools_SAMPLE: { key: string; val: Pool }[] = [
+const pool_SAMPLE: { key: string; val: Pool }[] = [
   {
     key: "43a2f4ef8ce286e57ab3e39e6da3741382ba542854a1b28231a7a5b8ba337fcd",
     val: {

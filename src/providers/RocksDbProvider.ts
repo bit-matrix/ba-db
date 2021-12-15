@@ -7,16 +7,17 @@ export class RocksDbProvider {
     this.db = db;
   }
 
-  get = async <T>(key: string): Promise<T> => {
-    return new Promise<T>((resolve, reject) => {
+  get = async <T>(key: string): Promise<T | undefined> => {
+    return new Promise<T | undefined>((resolve, reject) => {
       this.db.get(key, { sync: true }, (err: Error | undefined, val: rocksdb.Bytes) => {
         if (err) {
-          console.error("RocksDbProvider.get.error", err);
-          reject(err);
+          if (err.message === "NotFound: ") return resolve(undefined);
+          console.error("RocksDbProvider.get.error", err.message, err.message === "NotFound: ");
+          return reject(err);
         }
 
-        if (val) resolve(JSON.parse(val.toString("utf8")));
-        else reject();
+        if (val) return resolve(JSON.parse(val.toString("utf8")));
+        else return reject();
       });
     });
   };
@@ -26,9 +27,9 @@ export class RocksDbProvider {
       this.db.put(key, Buffer.from(JSON.stringify(value)), { sync: true }, (err: Error | undefined) => {
         if (err) {
           console.error("RocksDbProvider.put.error", err);
-          reject(err);
+          return reject(err);
         }
-        resolve();
+        return resolve();
       });
     });
   };
@@ -47,12 +48,13 @@ export class RocksDbProvider {
 
             it.next((err: Error | undefined, key: rocksdb.Bytes, val: rocksdb.Bytes) => {
               if (err) {
+                if (err.message === "NotFound: ") return resolve([]);
                 console.error("RocksDbProvider.getMany.iterator.next.error", err);
-                reject();
+                return reject();
               } else if (key === undefined && val === undefined) {
                 it.end(() => {});
                 // console.log("it.next.finished");
-                resolve(result);
+                return resolve(result);
               } else {
                 // console.log("r: " + key.toString());
                 result.push({
@@ -64,14 +66,14 @@ export class RocksDbProvider {
             });
           } else {
             it.end(() => {});
-            resolve(result);
+            return resolve(result);
           }
         };
 
         next();
       } catch (err) {
         console.error("RocksDbProvider.getMany.error", err);
-        reject();
+        return reject();
       }
     });
   };

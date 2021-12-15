@@ -34,6 +34,18 @@ export class RocksDbProvider {
     });
   };
 
+  del = async (key: string): Promise<void> => {
+    return new Promise<void>((resolve, reject) => {
+      this.db.del(key, (err: Error | undefined) => {
+        if (err) {
+          console.error("RocksDbProvider.del.error", err);
+          return reject(err);
+        }
+        return resolve();
+      });
+    });
+  };
+
   getMany = async <T>(limit = 10, reverse = true): Promise<{ key: string; val: T }[]> => {
     return new Promise<{ key: string; val: T }[]>(async (resolve, reject) => {
       const result: { key: string; val: T }[] = [];

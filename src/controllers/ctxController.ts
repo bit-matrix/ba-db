@@ -44,7 +44,7 @@ export const ctxController = {
 
   post: async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const keyVal = <{ key: string; value: CommitmentTx[] }>req.body;
+      const keyVal = <{ key: string; value: CommitmentTx }>req.body;
 
       const providerActive = await CommitmentTxActiveProvider.getProvider();
       await providerActive.put(keyVal.key, keyVal.value);

@@ -4,14 +4,14 @@ import { CommitmentTx } from "../models/CommitmentTx";
 import { RocksDbProvider } from "./RocksDbProvider";
 
 export class CommitmentTxProvider {
-  private location: string = DATA_DIR + "asset_ctx_43a2f4ef8ce286e57ab3e39e6da3741382ba542854a1b28231a7a5b8ba337fcd";
+  private static location: string = DATA_DIR + "asset_ctx_43a2f4ef8ce286e57ab3e39e6da3741382ba542854a1b28231a7a5b8ba337fcd";
   private static _dbProvider: RocksDbProvider;
   private static _provider: CommitmentTxProvider;
   private constructor() {}
 
-  public getProvider = async (): Promise<CommitmentTxProvider> => {
+  public static getProvider = async (): Promise<CommitmentTxProvider> => {
     if (CommitmentTxProvider._provider === undefined) {
-      const db = rocksdb(this.location);
+      const db = rocksdb(CommitmentTxProvider.location);
 
       const openPromise = new Promise<void>((resolve, reject) => {
         db.open({ createIfMissing: true, errorIfExists: false }, (err) => {

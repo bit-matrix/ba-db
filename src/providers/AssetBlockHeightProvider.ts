@@ -4,14 +4,14 @@ import { AssetBlockheight } from "../models/AssetBlockheight";
 import { RocksDbProvider } from "./RocksDbProvider";
 
 export class AssetBlockHeightProvider {
-  private location: string = DATA_DIR + "asset_blockheight";
+  private static location: string = DATA_DIR + "asset_blockheight";
   private static _dbProvider: RocksDbProvider;
   private static _provider: AssetBlockHeightProvider;
   private constructor() {}
 
-  public getProvider = async (): Promise<AssetBlockHeightProvider> => {
+  public static getProvider = async (): Promise<AssetBlockHeightProvider> => {
     if (AssetBlockHeightProvider._provider === undefined) {
-      const db = rocksdb(this.location);
+      const db = rocksdb(AssetBlockHeightProvider.location);
 
       const openPromise = new Promise<void>((resolve, reject) => {
         db.open({ createIfMissing: true, errorIfExists: false }, (err) => {

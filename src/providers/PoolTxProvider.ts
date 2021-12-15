@@ -4,14 +4,14 @@ import { PoolTx } from "../models/PoolTx";
 import { RocksDbProvider } from "./RocksDbProvider";
 
 export class PoolTxProvider {
-  private location: string = DATA_DIR + "asset_ptx_43a2f4ef8ce286e57ab3e39e6da3741382ba542854a1b28231a7a5b8ba337fcd";
+  private static location: string = DATA_DIR + "asset_ptx_43a2f4ef8ce286e57ab3e39e6da3741382ba542854a1b28231a7a5b8ba337fcd";
   private static _dbProvider: RocksDbProvider;
   private static _provider: PoolTxProvider;
   private constructor() {}
 
-  public getProvider = async (): Promise<PoolTxProvider> => {
+  public static getProvider = async (): Promise<PoolTxProvider> => {
     if (PoolTxProvider._provider === undefined) {
-      const db = rocksdb(this.location);
+      const db = rocksdb(PoolTxProvider.location);
 
       const openPromise = new Promise<void>((resolve, reject) => {
         db.open({ createIfMissing: true, errorIfExists: false }, (err) => {

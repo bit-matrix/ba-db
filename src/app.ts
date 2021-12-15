@@ -4,6 +4,7 @@ import { initialDatas } from "./initialDatas";
 import { DATA_DIR, LISTEN_PORT } from "./env";
 
 import poolRoutes from "./routes/poolRoutes";
+import ctxRoutes from "./routes/ctxRoutes";
 
 const onExit = async () => {
   console.log("BA DB Service stopped.");
@@ -24,6 +25,7 @@ app.get("/", async (req, res, next) => {
 });
 
 app.use("/pools", poolRoutes);
+app.use("/ctx", ctxRoutes);
 
 initialDatas().then(() => {
   server.listen(LISTEN_PORT, () => {

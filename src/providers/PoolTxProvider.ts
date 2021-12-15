@@ -35,5 +35,8 @@ export class PoolTxProvider {
     return result || [];
   };
   put = async (key: string, value: PoolTx[]): Promise<void> => PoolTxProvider._dbProvider.put<PoolTx[]>(key, value);
-  getMany = async (limit = 10, reverse = true): Promise<{ key: string; val: PoolTx[] }[]> => PoolTxProvider._dbProvider.getMany<PoolTx[]>(limit, reverse);
+  getMany = async (limit = 10, reverse = true): Promise<PoolTx[][]> => {
+    const result = await PoolTxProvider._dbProvider.getMany<PoolTx[]>(limit, reverse);
+    return result.map((r) => r.val) || [];
+  };
 }

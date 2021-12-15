@@ -30,13 +30,10 @@ export class CommitmentTxProvider {
     return CommitmentTxProvider._provider;
   };
 
-  get = async (key: string): Promise<CommitmentTx[]> => {
-    const result = await CommitmentTxProvider._dbProvider.get<CommitmentTx[]>(key);
-    return result || [];
-  };
-  put = async (key: string, value: CommitmentTx[]): Promise<void> => CommitmentTxProvider._dbProvider.put<CommitmentTx[]>(key, value);
-  getMany = async (limit = 10, reverse = true): Promise<CommitmentTx[][]> => {
-    const result = await CommitmentTxProvider._dbProvider.getMany<CommitmentTx[]>(limit, reverse);
+  get = async (key: string): Promise<CommitmentTx | undefined> => CommitmentTxProvider._dbProvider.get<CommitmentTx>(key);
+  put = async (key: string, value: CommitmentTx): Promise<void> => CommitmentTxProvider._dbProvider.put<CommitmentTx>(key, value);
+  getMany = async (limit = 10, reverse = true): Promise<CommitmentTx[]> => {
+    const result = await CommitmentTxProvider._dbProvider.getMany<CommitmentTx>(limit, reverse);
     return result.map((r) => r.val) || [];
   };
 }

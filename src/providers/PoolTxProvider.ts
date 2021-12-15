@@ -30,13 +30,10 @@ export class PoolTxProvider {
     return PoolTxProvider._provider;
   };
 
-  get = async (key: string): Promise<PoolTx[]> => {
-    const result = await PoolTxProvider._dbProvider.get<PoolTx[]>(key);
-    return result || [];
-  };
-  put = async (key: string, value: PoolTx[]): Promise<void> => PoolTxProvider._dbProvider.put<PoolTx[]>(key, value);
-  getMany = async (limit = 10, reverse = true): Promise<PoolTx[][]> => {
-    const result = await PoolTxProvider._dbProvider.getMany<PoolTx[]>(limit, reverse);
+  get = async (key: string): Promise<PoolTx | undefined> => PoolTxProvider._dbProvider.get<PoolTx>(key);
+  put = async (key: string, value: PoolTx): Promise<void> => PoolTxProvider._dbProvider.put<PoolTx>(key, value);
+  getMany = async (limit = 10, reverse = true): Promise<PoolTx[]> => {
+    const result = await PoolTxProvider._dbProvider.getMany<PoolTx>(limit, reverse);
     return result.map((r) => r.val) || [];
   };
 }

@@ -29,7 +29,7 @@ export const ptxController = {
 
   post: async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const keyVal = <{ key: string; value: PoolTx[] }>req.body;
+      const keyVal = <{ key: string; value: PoolTx }>req.body;
 
       const provider = await PoolTxProvider.getProvider();
       await provider.put(keyVal.key, keyVal.value);

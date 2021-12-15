@@ -30,7 +30,7 @@ docker rm $(docker ps -a -q)
 
 ### bitmatrix-aggregate-db
 
-DATA_DIR=/tmp/db node dist/app.js
+DATA_DIR=/ba-db/data-dir/ node dist/app.js
 
 ## License
 

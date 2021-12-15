@@ -2,7 +2,7 @@ import http from "http";
 import express from "express";
 import { POOLS } from "./data";
 
-const DATA_DIR: string = process.env.DATA_DIR || "/tmp/db/";
+const DATA_DIR: string = process.env.DATA_DIR || "/ba-db/data-dir/";
 const LISTEN_PORT: number = Number(process.env.PORT || 8899);
 
 const onExit = async () => {

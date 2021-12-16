@@ -27,7 +27,7 @@ export class CtxActiveProvider {
     if (unspentTxs.length === 0) return this.assetProvider.del(this.asset + "__" + CtxActiveProvider.filename, key);
 
     // has unspent txs, add or update it
-    this.assetProvider.put<CommitmentTx>(this.asset + "__" + CtxActiveProvider.filename, key, { ...value, txs: unspentTxs });
+    return this.assetProvider.put<CommitmentTx>(this.asset + "__" + CtxActiveProvider.filename, key, { ...value, txs: unspentTxs });
   };
   getMany = async (limit = 10, reverse = true): Promise<CommitmentTx[]> => {
     const result = await this.assetProvider.getMany<CommitmentTx>(this.asset + "__" + CtxActiveProvider.filename, limit, reverse);

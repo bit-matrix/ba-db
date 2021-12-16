@@ -7,6 +7,7 @@ import poolRoutes from "./routes/poolRoutes";
 import ctxRoutes from "./routes/ctxRoutes";
 import ptxRoutes from "./routes/ptxRoutes";
 import assetBlockHeightRoutes from "./routes/assetBlockHeightRoutes";
+import clearRoutes from "./routes/clearRoutes";
 
 const onExit = async () => {
   console.log("BA DB Service stopped.");
@@ -30,6 +31,7 @@ app.use("/pools", poolRoutes);
 app.use("/ctx", ctxRoutes);
 app.use("/ptx", ptxRoutes);
 app.use("/height", assetBlockHeightRoutes);
+app.use("/clear", clearRoutes);
 
 initialDatas().then(() => {
   server.listen(LISTEN_PORT, () => {

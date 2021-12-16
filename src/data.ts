@@ -1,3 +1,4 @@
+import { AssetBlockheight } from "./models/AssetBlockheight";
 import { Pool } from "./models/Pool";
 
 export const POOLS: Pool[] = [
@@ -8,6 +9,8 @@ export const POOLS: Pool[] = [
     active: true,
   },
 ];
+
+export const ASSET_BLOCK_HEIGHT: AssetBlockheight = { block_height: 0, block_hash: "a771da8e52ee6ad581ed1e9a99825e5b3b7992225534eaa2ae23244fe26ab1c1" };
 
 /**
  * Files

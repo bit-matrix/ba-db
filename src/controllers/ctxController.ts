@@ -1,20 +1,24 @@
 import { NextFunction, Request, Response } from "express";
 import { CommitmentTx } from "../models/CommitmentTx";
-import { CommitmentTxActiveProvider } from "../providers/CommitmentTxActiveProvider";
-import { CommitmentTxProvider } from "../providers/CommitmentTxProvider";
+import { isPoolAsset } from "./common";
+import { CtxActiveProvider } from "../providers/AssetProviders/CtxActiveProvider";
+import { CtxProvider } from "../providers/AssetProviders/CtxProvider";
 
 export const ctxController = {
   getAllLastLimit: async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const limit: number = Number(req.query.limit || 10);
+      const asset = req.params.asset;
+      await isPoolAsset(asset);
 
+      const limit: number = Number(req.query.limit || 10);
       const active: boolean = req.query.active !== "false";
+
       if (active) {
-        const provider = await CommitmentTxActiveProvider.getProvider();
+        const provider = await CtxActiveProvider.getProvider(asset);
         const result = await provider.getMany(limit);
         res.status(200).send(result);
       } else {
-        const provider = await CommitmentTxProvider.getProvider();
+        const provider = await CtxProvider.getProvider(asset);
         const result = await provider.getMany(limit);
         res.status(200).send(result);
       }
@@ -25,15 +29,18 @@ export const ctxController = {
 
   get: async (req: Request, res: Response, next: NextFunction) => {
     try {
+      const asset = req.params.asset;
+      await isPoolAsset(asset);
+
       const blockHash = req.params.id;
 
       const active: boolean = req.params.active !== "false";
       if (active) {
-        const provider = await CommitmentTxActiveProvider.getProvider();
+        const provider = await CtxActiveProvider.getProvider(asset);
         const result = await provider.get(blockHash);
         res.status(200).send(result);
       } else {
-        const provider = await CommitmentTxProvider.getProvider();
+        const provider = await CtxProvider.getProvider(asset);
         const result = await provider.get(blockHash);
         res.status(200).send(result);
       }
@@ -44,12 +51,15 @@ export const ctxController = {
 
   post: async (req: Request, res: Response, next: NextFunction) => {
     try {
+      const asset = req.params.asset;
+      await isPoolAsset(asset);
+
       const keyVal = <{ key: string; value: CommitmentTx }>req.body;
 
-      const providerActive = await CommitmentTxActiveProvider.getProvider();
+      const providerActive = await CtxActiveProvider.getProvider(asset);
       await providerActive.put(keyVal.key, keyVal.value);
 
-      const provider = await CommitmentTxProvider.getProvider();
+      const provider = await CtxProvider.getProvider(asset);
       await provider.put(keyVal.key, keyVal.value);
 
       res.status(200).send({ status: true });

@@ -3,8 +3,8 @@ import { ptxController } from "../controllers/ptxController";
 
 const ptxRoutes = Router();
 
-ptxRoutes.route("/").get(ptxController.getAllLastLimit).post(ptxController.post);
+ptxRoutes.route("/:asset").get(ptxController.getAllLastLimit).post(ptxController.post);
 
-ptxRoutes.route("/:id").get(ptxController.get);
+ptxRoutes.route("/:asset/:id").get(ptxController.get);
 
 export default ptxRoutes;

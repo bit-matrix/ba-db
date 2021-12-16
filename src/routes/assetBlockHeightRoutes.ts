@@ -4,8 +4,8 @@ import { ctxController } from "../controllers/ctxController";
 
 const assetBlockHeightRoutes = Router();
 
-assetBlockHeightRoutes.route("/:id").get(assetBlockHeightController.get);
+assetBlockHeightRoutes.route("/:asset").get(assetBlockHeightController.get);
 
-assetBlockHeightRoutes.route("/:id/:type").post(assetBlockHeightController.post);
+assetBlockHeightRoutes.route("/:asset/:type").post(assetBlockHeightController.post);
 
 export default assetBlockHeightRoutes;

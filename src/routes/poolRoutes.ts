@@ -5,6 +5,6 @@ const poolRoutes = Router();
 
 poolRoutes.route("/").get(poolController.getAll);
 
-poolRoutes.route("/:id").get(poolController.get);
+poolRoutes.route("/:asset").get(poolController.get);
 
 export default poolRoutes;

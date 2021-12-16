@@ -19,6 +19,31 @@ export const assetBlockHeightController = {
     }
   },
 
+  getByType: async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const asset = req.params.asset;
+      await isPoolAsset(asset);
+
+      const type = req.params.type;
+
+      if (type && (type.toUpperCase() === "CTX" || type.toUpperCase() === "PTX")) {
+        const provider = await AssetBlockHeightProvider.getProvider();
+        let result: AssetBlockheight | undefined;
+        const key = asset + ":" + type.toUpperCase();
+        if (type.toUpperCase() === "CTX") {
+          result = await provider.get(asset + ":CTX");
+        } else {
+          result = await provider.get(asset + ":PTX");
+        }
+        return res.status(200).send(result);
+      } else {
+        return res.status(400).send({ status: false });
+      }
+    } catch (error) {
+      res.status(501).send({ status: false, error });
+    }
+  },
+
   post: async (req: Request, res: Response, next: NextFunction) => {
     try {
       const asset = req.params.asset;

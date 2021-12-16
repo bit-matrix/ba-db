@@ -24,7 +24,7 @@ export class CtxActiveProvider {
     const unspentTxs = value.txs.filter((tx) => tx.spendTxId === "");
 
     // if all ctxs of block spent, del this data from active table
-    if (unspentTxs.length === 0) return this.assetProvider.del(this.asset, key);
+    if (unspentTxs.length === 0) return this.assetProvider.del(this.asset + "__" + CtxActiveProvider.filename, key);
 
     // has unspent txs, add or update it
     this.assetProvider.put<CommitmentTx>(this.asset + "__" + CtxActiveProvider.filename, key, { ...value, txs: unspentTxs });

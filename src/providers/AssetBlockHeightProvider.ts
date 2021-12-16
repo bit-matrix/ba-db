@@ -36,4 +36,7 @@ export class AssetBlockHeightProvider {
     const result = await AssetBlockHeightProvider._dbProvider.getMany<AssetBlockheight>(limit, reverse);
     return result.map((r) => ({ key: r.key.split(":")[1], ...r.val }));
   };
+  clear = async (asset: string): Promise<void> => {
+    return Promise.all([AssetBlockHeightProvider._dbProvider.del(asset + ":CTX"), AssetBlockHeightProvider._dbProvider.del(asset + ":PTX")]).then(() => {});
+  };
 }

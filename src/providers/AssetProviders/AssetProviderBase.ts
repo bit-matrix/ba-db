@@ -63,4 +63,12 @@ export class AssetProviderBase {
     }
     throw new Error("asset file not found..");
   };
+
+  deleteAll = async (assetFile: string): Promise<void> => {
+    let baseProvider = AssetProviderBase.baseProviders.find((p) => p.assetFile === assetFile);
+    if (baseProvider) {
+      return baseProvider._dbProvider.deleteAll();
+    }
+    throw new Error("asset file not found..");
+  };
 }

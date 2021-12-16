@@ -24,4 +24,5 @@ export class CtxProvider {
     const result = await this.assetProvider.getMany<CommitmentTx>(this.asset + "__" + CtxProvider.filename, limit, reverse);
     return result.map((r) => r.val) || [];
   };
+  clear = async (): Promise<void> => this.assetProvider.deleteAll(this.asset + "__" + CtxProvider.filename);
 }

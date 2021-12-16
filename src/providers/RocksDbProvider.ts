@@ -89,4 +89,41 @@ export class RocksDbProvider {
       }
     });
   };
+
+  deleteAll = async <T>(): Promise<void> => {
+    return new Promise<void>(async (resolve, reject) => {
+      const it: rocksdb.Iterator = this.db.iterator();
+      try {
+        const next = () => {
+          it.next((err: Error | undefined, key: rocksdb.Bytes, val: rocksdb.Bytes) => {
+            if (err) {
+              if (err.message === "NotFound: ") return resolve();
+              console.error("RocksDbProvider.deleteAll.iterator.next.error", err);
+              return reject();
+            } else if (key === undefined && val === undefined) {
+              it.end(() => {});
+              // console.log("it.next.finished");
+              return resolve();
+            } else {
+              this.db.del(key, (err2: Error | undefined) => {
+                if (err2) {
+                  console.error("RocksDbProvider.deleteAll.del.error", err);
+                  it.end(() => {});
+                  return reject();
+                } else {
+                  next();
+                }
+              });
+            }
+          });
+        };
+
+        next();
+      } catch (err) {
+        console.error("RocksDbProvider.deleteAll.error", err);
+        it.end(() => {});
+        return reject();
+      }
+    });
+  };
 }

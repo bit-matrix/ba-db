@@ -24,4 +24,5 @@ export class PtxProvider {
     const result = await this.assetProvider.getMany<PoolTx>(this.asset + "__" + PtxProvider.filename, limit, reverse);
     return result.map((r) => r.val) || [];
   };
+  clear = async (): Promise<void> => this.assetProvider.deleteAll(this.asset + "__" + PtxProvider.filename);
 }

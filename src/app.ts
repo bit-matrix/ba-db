@@ -6,7 +6,7 @@ import { DATA_DIR, LISTEN_PORT } from "./env";
 import poolRoutes from "./routes/poolRoutes";
 import ctxRoutes from "./routes/ctxRoutes";
 import ptxRoutes from "./routes/ptxRoutes";
-import assetBlockHeightRoutes from "./routes/assetBlockHeightRoutes";
+import configRoutes from "./routes/configRoutes";
 import clearRoutes from "./routes/clearRoutes";
 
 const onExit = async () => {
@@ -30,7 +30,7 @@ app.get("/", async (req, res, next) => {
 app.use("/pools", poolRoutes);
 app.use("/ctx", ctxRoutes);
 app.use("/ptx", ptxRoutes);
-app.use("/height", assetBlockHeightRoutes);
+app.use("/config", configRoutes);
 app.use("/clear", clearRoutes);
 
 initialDatas().then(() => {

@@ -34,7 +34,7 @@ export const POOLS: Pool[] = [
       block_height: 131275,
     },
     synced: false,
-    syncedBlock: { block_hash: "721d3a1c587ad367bc8982ba9cb0e36c4136efdd1f240f286c9bc19504f3cb69", block_height: 131275 },
+    syncedBlock: { block_hash: "beeb6069a8ce5f12b2986a1e566d7df1f6fef3595abe7ea8dff44335897cdf54", block_height: 132670 },
     recentBlockHeight: 131275,
     active: true,
   },

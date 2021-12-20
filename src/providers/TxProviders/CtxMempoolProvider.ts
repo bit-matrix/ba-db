@@ -1,4 +1,4 @@
-import { BmCtxMempool } from "../../models/BmTx";
+import { BmCtxMempool } from "@bitmatrix/models";
 import { TxProviderBase } from "./TxProviderBase";
 
 export class CtxMempoolProvider {

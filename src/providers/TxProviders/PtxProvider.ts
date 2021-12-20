@@ -1,4 +1,4 @@
-import { BmPtx } from "../../models/BmTx";
+import { BmPtx } from "@bitmatrix/models";
 import { TxProviderBase } from "./TxProviderBase";
 
 export class PtxProvider {

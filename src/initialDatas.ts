@@ -1,5 +1,4 @@
-import { BmConfig } from "./models/BmConfig";
-import { Pool } from "./models/Pool";
+import { BmConfig, Pool } from "@bitmatrix/models";
 import { PoolProvider } from "./providers/PoolProvider";
 import { ConfigProvider } from "./providers/TxProviders/ConfigProvider";
 

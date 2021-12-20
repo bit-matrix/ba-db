@@ -1,9 +1,11 @@
 import { NextFunction, Request, Response } from "express";
+import { initialDatas, POOLS } from "../initialDatas";
 import { isPoolAsset } from "./common";
-import { CtxActiveProvider } from "../providers/AssetProviders/CtxActiveProvider";
-import { CtxProvider } from "../providers/AssetProviders/CtxProvider";
-import { PtxProvider } from "../providers/AssetProviders/PtxProvider";
-import { AssetBlockHeightProvider } from "../providers/AssetBlockHeightProvider";
+import { CtxNewProvider } from "../providers/TxProviders/CtxNewProvider";
+import { CtxMempoolProvider } from "../providers/TxProviders/CtxMempoolProvider";
+import { PtxProvider } from "../providers/TxProviders/PtxProvider";
+import { PtxCtxProvider } from "../providers/TxProviders/PtxCtxProvider";
+import { PoolProvider } from "../providers/PoolProvider";
 
 export const clearController = {
   delete: async (req: Request, res: Response, next: NextFunction) => {
@@ -11,19 +13,28 @@ export const clearController = {
       const asset = req.params.asset;
       await isPoolAsset(asset);
 
-      const ctxActiveProvider = await CtxActiveProvider.getProvider(asset);
-      const p1 = await ctxActiveProvider.clear();
+      const promises: Promise<void>[] = [];
 
-      const ctxProvider = await CtxProvider.getProvider(asset);
-      const p2 = await ctxProvider.clear();
+      // clear all new ctx
+      const ctxActiveProvider = await CtxNewProvider.getProvider(asset);
+      promises.push(ctxActiveProvider.clear());
 
+      // clear all ctx mempool
+      const ctxMempoolProvider = await CtxMempoolProvider.getProvider(asset);
+      promises.push(ctxMempoolProvider.clear());
+
+      // clear all ptx-ctx[]
+      const ptxCtxProvider = await PtxCtxProvider.getProvider(asset);
+      promises.push(ptxCtxProvider.clear());
+
+      // clear all ptx
       const ptxProvider = await PtxProvider.getProvider(asset);
-      const p3 = await ptxProvider.clear();
+      promises.push(ptxProvider.clear());
 
-      const assetBlockHeightProvider = await AssetBlockHeightProvider.getProvider();
-      const p4 = await assetBlockHeightProvider.clear(asset);
+      // initialpool data - config data
+      promises.push(initialDatas());
 
-      return Promise.all([p1, p2, p3, p4])
+      return Promise.all(promises)
         .then(() => {
           return res.status(200).send({ status: true });
         })

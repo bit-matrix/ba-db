@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from "express";
-import { Pool } from "../models/Pool";
+import { Pool } from "@bitmatrix/models";
 import { PoolProvider } from "../providers/PoolProvider";
 import { isPoolAsset } from "./common";
 

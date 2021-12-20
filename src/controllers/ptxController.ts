@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from "express";
-import { BmPtx } from "../models/BmTx";
+import { BmPtx } from "@bitmatrix/models";
 import { CtxMempoolProvider } from "../providers/TxProviders/CtxMempoolProvider";
 import { PtxCtxProvider } from "../providers/TxProviders/PtxCtxProvider";
 import { PtxProvider } from "../providers/TxProviders/PtxProvider";

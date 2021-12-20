@@ -1,4 +1,4 @@
-import { BmConfig } from "../../models/BmConfig";
+import { BmConfig } from "@bitmatrix/models";
 import { TxProviderBase } from "./TxProviderBase";
 
 export class ConfigProvider {

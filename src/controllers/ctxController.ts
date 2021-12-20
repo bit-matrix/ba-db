@@ -1,9 +1,9 @@
 import { NextFunction, Request, Response } from "express";
-import { BmCtxMempool, BmCtxNew } from "../models/BmTx";
 import { CtxMempoolProvider } from "../providers/TxProviders/CtxMempoolProvider";
 import { CtxNewProvider } from "../providers/TxProviders/CtxNewProvider";
 import { PtxCtxProvider } from "../providers/TxProviders/PtxCtxProvider";
 import { isPoolAsset } from "./common";
+import { BmCtxMempool, BmCtxNew } from '@bitmatrix/models'
 
 export const ctxController = {
   getAllLastLimit: async (req: Request, res: Response, next: NextFunction) => {

@@ -5,6 +5,6 @@ const ptxRoutes = Router();
 
 ptxRoutes.route("/:asset").get(ptxController.getAllLastLimit).post(ptxController.post);
 
-ptxRoutes.route("/:asset/:id").get(ptxController.get);
+ptxRoutes.route("/:asset/:ctxid").get(ptxController.get);
 
 export default ptxRoutes;

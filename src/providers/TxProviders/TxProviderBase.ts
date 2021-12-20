@@ -2,14 +2,14 @@ import rocksdb from "rocksdb";
 import { DATA_DIR } from "../../env";
 import { RocksDbProvider } from "./../RocksDbProvider";
 
-export class AssetProviderBase {
-  private static baseProviders: { assetFile: string; _dbProvider: RocksDbProvider; _provider: AssetProviderBase }[] = [];
+export class TxProviderBase {
+  private static baseProviders: { assetFile: string; _dbProvider: RocksDbProvider; _provider: TxProviderBase }[] = [];
 
   private constructor() {}
 
-  public static getProvider = async (asset: string, filename: string): Promise<AssetProviderBase> => {
+  public static getProvider = async (asset: string, filename: string): Promise<TxProviderBase> => {
     const assetFile = asset + "__" + filename;
-    let baseProvider = AssetProviderBase.baseProviders.find((p) => p.assetFile === assetFile);
+    let baseProvider = TxProviderBase.baseProviders.find((p) => p.assetFile === assetFile);
 
     if (baseProvider === undefined) {
       const db = rocksdb(DATA_DIR + assetFile);
@@ -17,7 +17,7 @@ export class AssetProviderBase {
       const openPromise = new Promise<void>((resolve, reject) => {
         db.open({ createIfMissing: true, errorIfExists: false }, (err) => {
           if (err) {
-            console.error("AssetProviderBase.constructor.db.open.error", err);
+            console.error("TxProviderBase.constructor.db.open.error", err);
             reject(err);
           }
           resolve();
@@ -25,15 +25,15 @@ export class AssetProviderBase {
       });
       await openPromise;
 
-      baseProvider = { assetFile, _dbProvider: new RocksDbProvider(db), _provider: new AssetProviderBase() };
-      AssetProviderBase.baseProviders.push(baseProvider);
+      baseProvider = { assetFile, _dbProvider: new RocksDbProvider(db), _provider: new TxProviderBase() };
+      TxProviderBase.baseProviders.push(baseProvider);
     }
 
     return baseProvider._provider;
   };
 
   get = async <T>(assetFile: string, key: string): Promise<T | undefined> => {
-    let baseProvider = AssetProviderBase.baseProviders.find((p) => p.assetFile === assetFile);
+    let baseProvider = TxProviderBase.baseProviders.find((p) => p.assetFile === assetFile);
     if (baseProvider) {
       return baseProvider._dbProvider.get<T>(key);
     }
@@ -41,7 +41,7 @@ export class AssetProviderBase {
   };
 
   del = async (assetFile: string, key: string): Promise<void> => {
-    let baseProvider = AssetProviderBase.baseProviders.find((p) => p.assetFile === assetFile);
+    let baseProvider = TxProviderBase.baseProviders.find((p) => p.assetFile === assetFile);
     if (baseProvider) {
       return baseProvider._dbProvider.del(key);
     }
@@ -49,7 +49,7 @@ export class AssetProviderBase {
   };
 
   put = async <T>(assetFile: string, key: string, value: T): Promise<void> => {
-    let baseProvider = AssetProviderBase.baseProviders.find((p) => p.assetFile === assetFile);
+    let baseProvider = TxProviderBase.baseProviders.find((p) => p.assetFile === assetFile);
     if (baseProvider) {
       return baseProvider._dbProvider.put<T>(key, value);
     }
@@ -57,7 +57,7 @@ export class AssetProviderBase {
   };
 
   getMany = async <T>(assetFile: string, limit = 10, reverse = true): Promise<{ key: string; val: T }[]> => {
-    let baseProvider = AssetProviderBase.baseProviders.find((p) => p.assetFile === assetFile);
+    let baseProvider = TxProviderBase.baseProviders.find((p) => p.assetFile === assetFile);
     if (baseProvider) {
       return baseProvider._dbProvider.getMany<T>(limit, reverse);
     }
@@ -65,7 +65,7 @@ export class AssetProviderBase {
   };
 
   deleteAll = async (assetFile: string): Promise<void> => {
-    let baseProvider = AssetProviderBase.baseProviders.find((p) => p.assetFile === assetFile);
+    let baseProvider = TxProviderBase.baseProviders.find((p) => p.assetFile === assetFile);
     if (baseProvider) {
       return baseProvider._dbProvider.deleteAll();
     }

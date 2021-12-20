@@ -1,6 +1,8 @@
 import { NextFunction, Request, Response } from "express";
-import { PoolTx } from "../models/PoolTx";
-import { PtxProvider } from "../providers/AssetProviders/PtxProvider";
+import { BmPtx } from "../models/BmTx";
+import { CtxMempoolProvider } from "../providers/TxProviders/CtxMempoolProvider";
+import { PtxCtxProvider } from "../providers/TxProviders/PtxCtxProvider";
+import { PtxProvider } from "../providers/TxProviders/PtxProvider";
 import { isPoolAsset } from "./common";
 
 export const ptxController = {
@@ -13,9 +15,9 @@ export const ptxController = {
 
       const provider = await PtxProvider.getProvider(asset);
       const result = await provider.getMany(limit);
-      res.status(200).send(result);
+      return res.status(200).send(result);
     } catch (error) {
-      res.status(501).send({ status: false, error });
+      return res.status(501).send({ status: false, error });
     }
   },
 
@@ -24,13 +26,14 @@ export const ptxController = {
       const asset = req.params.asset;
       await isPoolAsset(asset);
 
-      const blockHash = req.params.id;
+      const ctxid = req.params.ctxid;
 
-      const provider = await PtxProvider.getProvider(asset);
-      const result = await provider.get(blockHash);
-      res.status(200).send(result);
+      const ptxProvider = await PtxProvider.getProvider(asset);
+      const result = await ptxProvider.get(ctxid);
+
+      return res.status(200).send(result);
     } catch (error) {
-      res.status(501).send({ status: false, error });
+      return res.status(501).send({ status: false, error });
     }
   },
 
@@ -39,14 +42,28 @@ export const ptxController = {
       const asset = req.params.asset;
       await isPoolAsset(asset);
 
-      const keyVal = <{ key: string; value: PoolTx }>req.body;
+      const ptx = <BmPtx>req.body;
 
-      const provider = await PtxProvider.getProvider(asset);
-      await provider.put(keyVal.key, keyVal.value);
+      // create ptx data
+      const providerPtx = await PtxProvider.getProvider(asset);
+      await providerPtx.put(ptx.commitmentTx.txid, ptx);
 
-      res.status(200).send({ status: true });
+      // create-update ptx-ctx[] data
+      const providerPtxCtx = await PtxCtxProvider.getProvider(asset);
+      const currentCtxs = await providerPtxCtx.get(ptx.poolTx.txid);
+      let newCtxs: string[] = [ptx.commitmentTx.txid];
+      if (currentCtxs) {
+        newCtxs = [...currentCtxs.commitmentTxs, ...newCtxs];
+      }
+      await providerPtxCtx.put(ptx.poolTx.txid, { poolTxid: ptx.poolTx.txid, commitmentTxs: newCtxs });
+
+      // delete ctx mempool data
+      const providerMempool = await CtxMempoolProvider.getProvider(asset);
+      await providerMempool.del(ptx.commitmentTx.txid);
+
+      return res.status(200).send({ status: true });
     } catch (error) {
-      res.status(501).send({ status: false, error });
+      return res.status(501).send({ status: false, error });
     }
   },
 };

@@ -6,9 +6,9 @@ export const poolController = {
     try {
       const provider = await PoolProvider.getProvider();
       const result = await provider.getMany();
-      res.status(200).send(result);
+      return res.status(200).send(result);
     } catch (error) {
-      res.status(501).send({ status: false, error });
+      return res.status(501).send({ status: false, error });
     }
   },
 
@@ -16,9 +16,9 @@ export const poolController = {
     try {
       const provider = await PoolProvider.getProvider();
       const result = await provider.get(req.params.asset);
-      res.status(200).send(result);
+      return res.status(200).send(result);
     } catch (error) {
-      res.status(501).send({ status: false, error });
+      return res.status(501).send({ status: false, error });
     }
   },
 };

@@ -12,6 +12,12 @@ const initialPoolTx: BmTxInfo = {
   ...initialPoolBlock,
 };
 
+const lastSpentTx: BmTxInfo = {
+  txid: "59be8197793deb0521272e88d6b007778394ffb2e6678dc3d42f528bfefde6c6",
+  block_hash: "be46e18a202f80aba9b1bd146244d3e828fab06ae454ac2223a3123f50112c5f",
+  block_height: 138387,
+};
+
 export const POOLS: Pool[] = [
   {
     /**
@@ -22,13 +28,13 @@ export const POOLS: Pool[] = [
       ticker: "tL-BTC",
       name: "Liquid Testnet Bitcoin",
       asset: "144c654344aa716d6f3abcc1ca90e5641e4e2a7f633bc09fe3baf64585819a49",
-      value: "1000000000",
+      value: "1000020000",
     },
     token: {
       ticker: "tL-USDt",
       name: "Liquid Testnet Tether",
       asset: "58caa32446839c6befe7bcf483c72d27a92c45429b55ff6f42b3c0a9726aa19e",
-      value: "50000000000000",
+      value: "49999001000000",
     },
     lp: {
       ticker: "tL-BTC:tL-USDt:0",
@@ -61,7 +67,7 @@ export const POOLS: Pool[] = [
     /**
      * recent worker found pool tx (it may be spent, validate "synced")
      */
-    lastUnspentTx: initialPoolTx,
+    lastUnspentTx: lastSpentTx,
 
     /**
      * if worker broadcast one tx, save here.

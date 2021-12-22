@@ -5,13 +5,18 @@ import { CtxNewProvider } from "../providers/TxProviders/CtxNewProvider";
 import { CtxMempoolProvider } from "../providers/TxProviders/CtxMempoolProvider";
 import { PtxProvider } from "../providers/TxProviders/PtxProvider";
 import { PtxCtxProvider } from "../providers/TxProviders/PtxCtxProvider";
-import { PoolProvider } from "../providers/PoolProvider";
 
 export const clearController = {
   delete: async (req: Request, res: Response, next: NextFunction) => {
     try {
       const asset = req.params.asset;
       await isPoolAsset(asset);
+
+      let b = req.query.b;
+      let lastSyncedBlockHeight: number | undefined;
+      if (b !== undefined) {
+        lastSyncedBlockHeight = Number(b);
+      }
 
       const promises: Promise<void>[] = [];
 
@@ -32,7 +37,7 @@ export const clearController = {
       promises.push(ptxProvider.clear());
 
       // initialpool data - config data
-      promises.push(initialDatas());
+      promises.push(initialDatas(lastSyncedBlockHeight));
 
       return Promise.all(promises)
         .then(() => {

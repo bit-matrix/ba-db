@@ -23,7 +23,7 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@bitmatrix/models": "^0.0.3",
+    "@bitmatrix/models": "^0.0.4",
     "express": "^4.17.1",
     "rocksdb": "^5.2.0"
   }

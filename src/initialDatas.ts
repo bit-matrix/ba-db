@@ -1,9 +1,80 @@
-import { BmConfig, Pool } from "@bitmatrix/models";
+import { BmBlockInfo, BmConfig, BmTxInfo, Pool } from "@bitmatrix/models";
 import { PoolProvider } from "./providers/PoolProvider";
 import { ConfigProvider } from "./providers/TxProviders/ConfigProvider";
 
+const initialPoolBlock: BmBlockInfo = {
+  block_hash: "5ba3c5c59e514db9ce7be1a2fcc2c99693cdc6fe1d649c1d6e261bbe5b9815f6",
+  block_height: 138366,
+};
+
+const initialPoolTx: BmTxInfo = {
+  txid: "c2fe3190fad754e57703344ff6d73c40ddafcc2c4fbddcd659b9ba7e4db25b37",
+  ...initialPoolBlock,
+};
+
 export const POOLS: Pool[] = [
   {
+    /**
+     * pool assets, values
+     */
+    id: "e1ed34f4be34f90408f008c32f932e2b7ebfbfab64ed3e925aab8b635cba5c16",
+    quote: {
+      ticker: "tL-BTC",
+      name: "Liquid Testnet Bitcoin",
+      asset: "144c654344aa716d6f3abcc1ca90e5641e4e2a7f633bc09fe3baf64585819a49",
+      value: "1000000000",
+    },
+    token: {
+      ticker: "tL-USDt",
+      name: "Liquid Testnet Tether",
+      asset: "58caa32446839c6befe7bcf483c72d27a92c45429b55ff6f42b3c0a9726aa19e",
+      value: "50000000000000",
+    },
+    lp: {
+      ticker: "tL-BTC:tL-USDt:0",
+      name: "Liquid Testnet LP: Bitcoin:Tether:0 Liquidty Provider",
+      asset: "772c8f2d8a5426cdc2a483f75b3fc317b67c599f8c8741b90539db48bf47a0f4",
+      value: "1999990000",
+    },
+
+    /**
+     * pool creation tx info
+     */
+    initialTx: initialPoolTx,
+
+    /**
+     * last worker checked block info
+     */
+    lastSyncedBlock: initialPoolBlock,
+
+    /**
+     * recent block height on network
+     */
+    bestBlockHeight: 0,
+
+    /**
+     * lastSyncedBlock.height === bestBlockHeight
+     * (if true worker can create pool tx else pass creation pool tx)
+     */
+    synced: false,
+
+    /**
+     * recent worker found pool tx (it may be spent, validate "synced")
+     */
+    lastUnspentTx: initialPoolTx,
+
+    /**
+     * if worker broadcast one tx, save here.
+     * when it confirmed (worker found new ptx is equal to this), delete for new creation pool tx
+     */
+    lastSentPtx: undefined,
+
+    /**
+     * pool is active
+     */
+    active: true,
+  },
+  /* {
     id: "43a2f4ef8ce286e57ab3e39e6da3741382ba542854a1b28231a7a5b8ba337fcd",
     quote: {
       ticker: "tL-BTC",
@@ -43,7 +114,7 @@ export const POOLS: Pool[] = [
 
     recentBlockHeight: 131275,
     active: true,
-  },
+  }, */
 ];
 
 export const BM_CONFIG: BmConfig = {
@@ -58,12 +129,13 @@ export const BM_CONFIG: BmConfig = {
   innerPublicKey: "1dae61a4a8f841952be3a511502d4f56e889ffa0685aa0098773ea2d4309f624",
 };
 
-export const initialDatas = async (): Promise<void> => {
+export const initialDatas = async (lastSyncedBlockHeight?: number): Promise<void> => {
   const promises: Promise<void>[] = [];
   const poolProvider = await PoolProvider.getProvider();
 
   POOLS.forEach(async (p) => {
-    promises.push(poolProvider.put(p.id, p));
+    const lsbh = lastSyncedBlockHeight === undefined ? p.lastSyncedBlock.block_height : lastSyncedBlockHeight;
+    promises.push(poolProvider.put(p.id, { ...p, lastSyncedBlock: { ...p.lastSyncedBlock, block_height: lsbh } }));
     const configProvider = await ConfigProvider.getProvider(p.id);
     promises.push(configProvider.put(p.id, { ...BM_CONFIG, id: p.id }));
   });

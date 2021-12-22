@@ -1,5 +1,6 @@
 import http from "http";
 import express from "express";
+import cors from "cors";
 import { initialDatas } from "./initialDatas";
 import { DATA_DIR, LISTEN_PORT } from "./env";
 
@@ -21,6 +22,7 @@ process.on("SIGINT", () => {
 const app = express();
 app.use(express.json()); // to support JSON-encoded bodies
 app.use(express.urlencoded()); // to support URL-encoded bodies
+app.use(cors());
 
 const server = http.createServer(app);
 

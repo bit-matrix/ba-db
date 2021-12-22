@@ -3,19 +3,19 @@ import { PoolProvider } from "./providers/PoolProvider";
 import { ConfigProvider } from "./providers/TxProviders/ConfigProvider";
 
 const initialPoolBlock: BmBlockInfo = {
-  block_hash: "5ba3c5c59e514db9ce7be1a2fcc2c99693cdc6fe1d649c1d6e261bbe5b9815f6",
-  block_height: 138366,
+  block_hash: "da1a6cf793ca24ac5c76213b783d86558c673de82d989e45deead51742d38837",
+  block_height: 138752,
 };
 
 const initialPoolTx: BmTxInfo = {
-  txid: "c2fe3190fad754e57703344ff6d73c40ddafcc2c4fbddcd659b9ba7e4db25b37",
+  txid: "b4123d2942202e1ff7e98ee4db6d1c8ee354d59eacff79be7e75c46533257af7",
   ...initialPoolBlock,
 };
 
 const lastSpentTx: BmTxInfo = {
-  txid: "59be8197793deb0521272e88d6b007778394ffb2e6678dc3d42f528bfefde6c6",
-  block_hash: "be46e18a202f80aba9b1bd146244d3e828fab06ae454ac2223a3123f50112c5f",
-  block_height: 138387,
+  txid: "b4123d2942202e1ff7e98ee4db6d1c8ee354d59eacff79be7e75c46533257af7",
+  block_hash: "da1a6cf793ca24ac5c76213b783d86558c673de82d989e45deead51742d38837",
+  block_height: 138752,
 };
 
 export const POOLS: Pool[] = [

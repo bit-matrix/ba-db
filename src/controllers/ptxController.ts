@@ -4,6 +4,7 @@ import { CtxMempoolProvider } from "../providers/TxProviders/CtxMempoolProvider"
 import { PtxCtxProvider } from "../providers/TxProviders/PtxCtxProvider";
 import { PtxProvider } from "../providers/TxProviders/PtxProvider";
 import { isPoolAsset } from "./common";
+import { CtxNewProvider } from "../providers/TxProviders/CtxNewProvider";
 
 export const ptxController = {
   getAllLastLimit: async (req: Request, res: Response, next: NextFunction) => {
@@ -60,6 +61,12 @@ export const ptxController = {
       // delete ctx mempool data
       const providerMempool = await CtxMempoolProvider.getProvider(asset);
       await providerMempool.del(ptx.commitmentTx.txid);
+
+      try {
+        // delete ctx new data (if we didnt create this ptx) clear
+        const providerCtxNew = await CtxNewProvider.getProvider(asset);
+        await providerCtxNew.del(ptx.commitmentTx.txid);
+      } catch {}
 
       return res.status(200).send({ status: true });
     } catch (error) {

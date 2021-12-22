@@ -3,7 +3,7 @@ import { CtxMempoolProvider } from "../providers/TxProviders/CtxMempoolProvider"
 import { CtxNewProvider } from "../providers/TxProviders/CtxNewProvider";
 import { PtxCtxProvider } from "../providers/TxProviders/PtxCtxProvider";
 import { isPoolAsset } from "./common";
-import { BmCtxMempool, BmCtxNew } from '@bitmatrix/models'
+import { BmCtxMempool, BmCtxNew } from "@bitmatrix/models";
 
 export const ctxController = {
   getAllLastLimit: async (req: Request, res: Response, next: NextFunction) => {
@@ -63,6 +63,7 @@ export const ctxController = {
         // create new ctx data
         const ctxNew = <BmCtxNew>req.body;
         await providerNew.put(ctxNew.commitmentTx.txid, ctxNew);
+
         return res.status(200).send({ status: true });
       } else {
         const ctxMempool = <BmCtxMempool>req.body;
@@ -74,13 +75,14 @@ export const ctxController = {
         // delete new ctx data
         await providerNew.del(ctxMempool.commitmentTx.txid);
 
-        /* const providerPtxCtx = await PtxCtxProvider.getProvider(asset);
+        // create-update ptx-ctx[] data
+        const providerPtxCtx = await PtxCtxProvider.getProvider(asset);
         const currentCtxs = await providerPtxCtx.get(ctxMempool.poolTxid);
         let newCtxs: string[] = [ctxMempool.commitmentTx.txid];
         if (currentCtxs) {
           newCtxs = [...currentCtxs.commitmentTxs, ...newCtxs];
         }
-        await providerPtxCtx.put(ctxMempool.poolTxid, { poolTxid: ctxMempool.poolTxid, commitmentTxs: newCtxs }); */
+        await providerPtxCtx.put(ctxMempool.poolTxid, { poolTxid: ctxMempool.poolTxid, commitmentTxs: newCtxs });
 
         return res.status(200).send({ status: true });
       }

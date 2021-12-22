@@ -1,3 +1,8 @@
+cd /root/github/bit-matrix/ba-db
+git pull
+docker build -t ba-db .
+docker run -d -p 8899:8899 ba-db
+
 ## build
 
 docker build -t ba-db .

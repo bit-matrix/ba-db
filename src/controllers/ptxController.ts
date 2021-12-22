@@ -49,15 +49,6 @@ export const ptxController = {
       const providerPtx = await PtxProvider.getProvider(asset);
       await providerPtx.put(ptx.commitmentTx.txid, ptx);
 
-      // create-update ptx-ctx[] data
-      const providerPtxCtx = await PtxCtxProvider.getProvider(asset);
-      const currentCtxs = await providerPtxCtx.get(ptx.poolTx.txid);
-      let newCtxs: string[] = [ptx.commitmentTx.txid];
-      if (currentCtxs) {
-        newCtxs = [...currentCtxs.commitmentTxs, ...newCtxs];
-      }
-      await providerPtxCtx.put(ptx.poolTx.txid, { poolTxid: ptx.poolTx.txid, commitmentTxs: newCtxs });
-
       // delete ctx mempool data
       const providerMempool = await CtxMempoolProvider.getProvider(asset);
       await providerMempool.del(ptx.commitmentTx.txid);

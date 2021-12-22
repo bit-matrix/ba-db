@@ -9,19 +9,19 @@ export const POOLS: Pool[] = [
       ticker: "tL-BTC",
       name: "Liquid Testnet Bitcoin",
       asset: "144c654344aa716d6f3abcc1ca90e5641e4e2a7f633bc09fe3baf64585819a49",
-      value: "0",
+      value: "1005000",
     },
     token: {
       ticker: "tL-USDt",
       name: "Liquid Testnet Tether",
       asset: "213cbc4df83abc230852526b1156877f60324da869f0affaee73b6a6a32ad025",
-      value: "0",
+      value: "49753000000",
     },
     lp: {
       ticker: "tL-BTC:tL-USDt:0",
       name: "Liquid Testnet LP: Bitcoin:Tether:0 Liquidty Provider",
       asset: "01f4346a807134c6dbe20801864d995b9b4c9a73063b0cd806596cd780c0af39",
-      value: "0",
+      value: "1999990000",
     },
     createdTx: {
       txid: "3d9bc4c1b203536406c129a24c3a14475d781972e4edd861eaad279358637954",
@@ -36,8 +36,11 @@ export const POOLS: Pool[] = [
     synced: false,
     syncedBlock: {
       block_hash: "53d436a2920fb4139849258d9fa4f57344f8c6032f62918a10a5734fabe74c24",
-      block_height: 131274,
+      block_height: 132675,
     },
+    // last unspent ctx: 132677
+    // last unspent ptx: 131275
+
     recentBlockHeight: 131275,
     active: true,
   },
@@ -45,12 +48,12 @@ export const POOLS: Pool[] = [
 
 export const BM_CONFIG: BmConfig = {
   id: "",
-  minRemainingSupply: "1000",
-  minTokenValue: "50000000",
-  baseFee: { number: "1200", hex: "" },
-  serviceFee: { number: "650", hex: "" },
-  commitmentTxFee: { number: "100", hex: "0000000000000064" },
-  defaultOrderingFee: { number: "1", hex: "01000000" },
+  minRemainingSupply: 1000,
+  minTokenValue: 50000000,
+  baseFee: { number: 1200, hex: "" },
+  serviceFee: { number: 650, hex: "" },
+  commitmentTxFee: { number: 100, hex: "0000000000000064" },
+  defaultOrderingFee: { number: 1, hex: "01000000" },
   fundingOutputAddress: "tex1qft5p2uhsdcdc3l2ua4ap5qqfg4pjaqlp250x7us7a8qqhrxrxfsqh7creg",
   innerPublicKey: "1dae61a4a8f841952be3a511502d4f56e889ffa0685aa0098773ea2d4309f624",
 };

@@ -67,7 +67,7 @@ export const POOLS: Pool[] = [
     /**
      * recent worker found pool tx (it may be spent, validate "synced")
      */
-    lastUnspentTx: lastSpentTx,
+    unspentTx: undefined,
 
     /**
      * if worker broadcast one tx, save here.

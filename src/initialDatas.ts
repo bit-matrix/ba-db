@@ -3,19 +3,13 @@ import { PoolProvider } from "./providers/PoolProvider";
 import { ConfigProvider } from "./providers/TxProviders/ConfigProvider";
 
 const initialPoolBlock: BmBlockInfo = {
-  block_hash: "da1a6cf793ca24ac5c76213b783d86558c673de82d989e45deead51742d38837",
-  block_height: 138752,
+  block_hash: "0eae90b7d8815f284c36ac5999e99eb8dc42a8e6b0a72f681f36d91ff28d3941",
+  block_height: 140252,
 };
 
 const initialPoolTx: BmTxInfo = {
-  txid: "b4123d2942202e1ff7e98ee4db6d1c8ee354d59eacff79be7e75c46533257af7",
+  txid: "95b3df28abdc5b30fe0a31cfe78bdf7e3dc102ecf61928007212caff0a386367",
   ...initialPoolBlock,
-};
-
-const lastSpentTx: BmTxInfo = {
-  txid: "b4123d2942202e1ff7e98ee4db6d1c8ee354d59eacff79be7e75c46533257af7",
-  block_hash: "da1a6cf793ca24ac5c76213b783d86558c673de82d989e45deead51742d38837",
-  block_height: 138752,
 };
 
 export const POOLS: Pool[] = [
@@ -23,23 +17,23 @@ export const POOLS: Pool[] = [
     /**
      * pool assets, values
      */
-    id: "e1ed34f4be34f90408f008c32f932e2b7ebfbfab64ed3e925aab8b635cba5c16",
+    id: "db7a0fa02b9649bb70d084f24412028a8b4157c91d07715a56870a161f041cb3",
     quote: {
       ticker: "tL-BTC",
       name: "Liquid Testnet Bitcoin",
       asset: "144c654344aa716d6f3abcc1ca90e5641e4e2a7f633bc09fe3baf64585819a49",
-      value: "1000020000",
+      value: "1000000000",
     },
     token: {
       ticker: "tL-USDt",
       name: "Liquid Testnet Tether",
-      asset: "58caa32446839c6befe7bcf483c72d27a92c45429b55ff6f42b3c0a9726aa19e",
-      value: "49999001000000",
+      asset: "f3d1ec678811398cd2ae277cbe3849c6f6dbd72c74bc542f7c4b11ff0e820958",
+      value: "50000000000000",
     },
     lp: {
       ticker: "tL-BTC:tL-USDt:0",
       name: "Liquid Testnet LP: Bitcoin:Tether:0 Liquidty Provider",
-      asset: "772c8f2d8a5426cdc2a483f75b3fc317b67c599f8c8741b90539db48bf47a0f4",
+      asset: "867a7ebf9dc4f33f3773e46f7315cdd3faf848bf63aca4d1d30e7628d3f62a98",
       value: "1999990000",
     },
 
@@ -80,6 +74,67 @@ export const POOLS: Pool[] = [
      */
     active: true,
   },
+  // {
+  /**
+   * pool assets, values
+   */
+  //   id: "e1ed34f4be34f90408f008c32f932e2b7ebfbfab64ed3e925aab8b635cba5c16",
+  //   quote: {
+  //     ticker: "tL-BTC",
+  //     name: "Liquid Testnet Bitcoin",
+  //     asset: "144c654344aa716d6f3abcc1ca90e5641e4e2a7f633bc09fe3baf64585819a49",
+  //     value: "1000020000",
+  //   },
+  //   token: {
+  //     ticker: "tL-USDt",
+  //     name: "Liquid Testnet Tether",
+  //     asset: "58caa32446839c6befe7bcf483c72d27a92c45429b55ff6f42b3c0a9726aa19e",
+  //     value: "49999001000000",
+  //   },
+  //   lp: {
+  //     ticker: "tL-BTC:tL-USDt:0",
+  //     name: "Liquid Testnet LP: Bitcoin:Tether:0 Liquidty Provider",
+  //     asset: "772c8f2d8a5426cdc2a483f75b3fc317b67c599f8c8741b90539db48bf47a0f4",
+  //     value: "1999990000",
+  //   },
+
+  /**
+   * pool creation tx info
+   */
+  //  initialTx: initialPoolTx,
+
+  /**
+   * last worker checked block info
+   */
+  //  lastSyncedBlock: initialPoolBlock,
+
+  /**
+   * recent block height on network
+   */
+  //  bestBlockHeight: 0,
+
+  /**
+   * lastSyncedBlock.height === bestBlockHeight
+   * (if true worker can create pool tx else pass creation pool tx)
+   */
+  //  synced: false,
+
+  /**
+   * recent worker found pool tx (it may be spent, validate "synced")
+   */
+  //  unspentTx: undefined,
+
+  /**
+   * if worker broadcast one tx, save here.
+   * when it confirmed (worker found new ptx is equal to this), delete for new creation pool tx
+   */
+  // lastSentPtx: undefined,
+
+  /**
+   * pool is active
+   */
+  //  active: true,
+  // },
   /* {
     id: "43a2f4ef8ce286e57ab3e39e6da3741382ba542854a1b28231a7a5b8ba337fcd",
     quote: {

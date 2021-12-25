@@ -9,11 +9,15 @@ docker build -t ba-db .
 
 ## run
 
-docker run -d -p 8899:8899 ba-db
+docker run -d -p 8899:8899 -v DataVolume1:/datavolume1 ba-db
 
-## run
+## run interactive
 
-docker run -it -p 8899:8899 ba-db
+docker run -it -p 8899:8899 ba-db -v DataVolume1:/datavolume1 ba-db
+
+## run interactive, remove when stop
+
+docker run -it --rm -p 8899:8899 ba-db -v DataVolume1:/datavolume1 ba-db
 
 ## image list
 

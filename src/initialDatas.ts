@@ -192,14 +192,18 @@ export const BM_CONFIG: BmConfig = {
 
 export const initialDatas = async (lastSyncedBlockHeight?: number): Promise<void> => {
   const promises: Promise<void>[] = [];
-  const poolProvider = await PoolProvider.getProvider();
 
-  POOLS.forEach(async (p) => {
-    const lsbh = lastSyncedBlockHeight === undefined ? p.lastSyncedBlock.block_height : lastSyncedBlockHeight;
-    promises.push(poolProvider.put(p.id, { ...p, lastSyncedBlock: { ...p.lastSyncedBlock, block_height: lsbh } }));
-    const configProvider = await ConfigProvider.getProvider(p.id);
-    promises.push(configProvider.put(p.id, { ...BM_CONFIG, id: p.id }));
-  });
+  const poolProvider = await PoolProvider.getProvider();
+  const pools = await poolProvider.getMany();
+
+  if (pools.length === 0) {
+    POOLS.forEach(async (p) => {
+      const lsbh = lastSyncedBlockHeight === undefined ? p.lastSyncedBlock.block_height : lastSyncedBlockHeight;
+      promises.push(poolProvider.put(p.id, { ...p, lastSyncedBlock: { ...p.lastSyncedBlock, block_height: lsbh } }));
+      const configProvider = await ConfigProvider.getProvider(p.id);
+      promises.push(configProvider.put(p.id, { ...BM_CONFIG, id: p.id }));
+    });
+  }
 
   return Promise.all(promises).then(() => {});
 };

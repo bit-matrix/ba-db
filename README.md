@@ -3,9 +3,13 @@ git pull
 docker build -t ba-db .
 docker run -d -p 8899:8899 ba-db
 
+## List db files
+
+ls /var/lib/docker/volumes/DataVolume1/
+
 ## build
 
-docker build -t ba-db .
+docker build -v DataVolume1:/datavolume1 -t ba-db .
 
 ## run
 

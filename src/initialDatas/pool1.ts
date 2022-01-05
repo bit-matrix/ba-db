@@ -82,6 +82,7 @@ const config: BmConfig = {
   defaultOrderingFee: { number: 1, hex: "01000000" },
   fundingOutputAddress: "tex1qft5p2uhsdcdc3l2ua4ap5qqfg4pjaqlp250x7us7a8qqhrxrxfsqh7creg",
   innerPublicKey: "1dae61a4a8f841952be3a511502d4f56e889ffa0685aa0098773ea2d4309f624",
+  recipientValueMinus: 3000000,
 };
 
 export const pool1 = { pool, config };

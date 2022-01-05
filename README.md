@@ -1,7 +1,7 @@
 cd /root/github/bit-matrix/ba-db
 git pull
 docker build -t ba-db .
-docker run -d -p 8899:8899 ba-db
+docker run -d -p 8899:8899 -v DataVolume1:/datavolume1 ba-db
 
 ## List db files
 

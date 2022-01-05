@@ -73,7 +73,7 @@ const pool: Pool = {
 };
 
 const config: BmConfig = {
-  id: "",
+  id: "ece73cb2f0b240dd6772898215ead8266383dafb76672e9d6bbbdcd772a55a5f",
   minRemainingSupply: 1000,
   minTokenValue: 50000000,
   baseFee: { number: 700, hex: "" },

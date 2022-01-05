@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from "express";
-import { initialDatas, POOLS } from "../initialDatas";
+import { initialDatas } from "../initialDatas";
 import { isPoolAsset } from "./common";
 import { CtxNewProvider } from "../providers/TxProviders/CtxNewProvider";
 import { CtxMempoolProvider } from "../providers/TxProviders/CtxMempoolProvider";

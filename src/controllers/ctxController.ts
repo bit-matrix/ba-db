@@ -52,6 +52,22 @@ export const ctxController = {
     }
   },
 
+  delete: async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const asset = req.params.asset;
+      await isPoolAsset(asset);
+
+      const txid = req.params.txid;
+      if (txid.length !== 64) return res.status(501).send({ status: false, error: "Invalid tx id" });
+
+      const provider = await CtxNewProvider.getProvider(asset);
+      const result = await provider.del(txid);
+      return res.status(200).send(result);
+    } catch (error) {
+      res.status(501).send({ status: false, error });
+    }
+  },
+
   post: async (req: Request, res: Response, next: NextFunction) => {
     try {
       const asset = req.params.asset;

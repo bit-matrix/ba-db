@@ -35,7 +35,7 @@ app.use("/ctx", ctxRoutes);
 app.use("/ptx", ptxRoutes);
 app.use("/ptx-ctx", ptxCtxRoutes);
 app.use("/config", configRoutes);
-app.use("/clear", clearRoutes);
+// app.use("/clear", clearRoutes);
 
 initialDatas().then(() => {
   server.listen(LISTEN_PORT, () => {

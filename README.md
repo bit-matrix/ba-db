@@ -1,7 +1,7 @@
 # Install
 
-mkdir /root/github/new-pool/bit-matrix/new-pool
-cd /root/github/new-pool/bit-matrix/new-pool
+mkdir /root/github/bit-matrix/new-pool
+cd /root/github/bit-matrix/new-pool
 git clone https://github.com/bit-matrix/ba-db.git
 cd ba-db
 git checkout -b new-pool

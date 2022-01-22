@@ -1,11 +1,25 @@
-cd /root/github/bit-matrix/ba-db
+# Install
+
+mkdir /root/github/new-pool/bit-matrix/new-pool
+cd /root/github/new-pool/bit-matrix/new-pool
+git clone https://github.com/bit-matrix/ba-db.git
+cd ba-db
+git checkout -b new-pool
+git branch --set-upstream-to=origin/new-pool new-pool
 git pull
-docker build -t ba-db .
-docker run -d -p 8899:8899 ba-db
+
+mkdir /var/lib/docker/volumes/DataVolume1/\_data/new-pool
+
+# Update
+
+cd /root/github/bit-matrix/new-pool/ba-db
+git pull
+docker build -t ba-db-new-pool .
+docker run -d -p 4499:4499 ba-db-new-pool
 
 ## List db files
 
-ls /var/lib/docker/volumes/DataVolume1/
+ls /var/lib/docker/volumes/DataVolume1/\_data/new-pool
 
 ## build
 

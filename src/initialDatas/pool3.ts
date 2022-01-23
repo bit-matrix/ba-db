@@ -93,9 +93,9 @@ const config: BmConfig = {
   ],
   holderCovenant: {
     scriptpubkey: {
-      main: "512037c891a23b0951555bf631585169edea145649f916a521397facfd7b8ab2b0de",
-      token: "512008a6b29465d1a82023e8d6317fb114d6b8e0e21f574c9fc7947c99bbdd0ba087",
-      lp: "512008a6b29465d1a82023e8d6317fb114d6b8e0e21f574c9fc7947c99bbdd0ba087",
+      main: "51206b6c891e14e73632f8459c5ed85f4b026db94a62b80f8e4b74ca2633cdc75e51",
+      token: "512018a9af9722be13bb33e162ccdc2840e63801f99325074082bdc6af1c9f47ed35",
+      lp: "512018a9af9722be13bb33e162ccdc2840e63801f99325074082bdc6af1c9f47ed35",
     },
     controlBlockPrefix: { main: "c4", token: "c5", lp: "c5" },
   },

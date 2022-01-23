@@ -97,7 +97,7 @@ const config: BmConfig = {
       token: "512018a9af9722be13bb33e162ccdc2840e63801f99325074082bdc6af1c9f47ed35",
       lp: "512018a9af9722be13bb33e162ccdc2840e63801f99325074082bdc6af1c9f47ed35",
     },
-    controlBlockPrefix: { main: "c5", token: "c5", lp: "c5" },
+    controlBlockPrefix: { main: "c4", token: "c5", lp: "c5" },
   },
 };
 

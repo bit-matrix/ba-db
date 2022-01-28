@@ -99,6 +99,7 @@ const config: BmConfig = {
     },
     controlBlockPrefix: { main: "c4", token: "c5", lp: "c5" },
   },
+  maxLeaf: 3,
 };
 
 export const pool3 = { pool, config };

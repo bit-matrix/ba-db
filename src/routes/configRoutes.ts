@@ -1,8 +1,8 @@
 import { Router } from "express";
 import { configController } from "../controllers/configController";
 
-const poolRoutes = Router();
+const configRoutes = Router();
 
-poolRoutes.route("/:asset").get(configController.get);
+configRoutes.route("/:asset").get(configController.get).post(configController.post);
 
-export default poolRoutes;
+export default configRoutes;

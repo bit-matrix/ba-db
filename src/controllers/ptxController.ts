@@ -45,12 +45,15 @@ export const ptxController = {
 
       const ptx = <BmPtx>req.body;
 
+      // get ctx mempool data
+      const providerMempool = await CtxMempoolProvider.getProvider(asset);
+      const isOutOfSlippage: boolean = (await providerMempool.get(ptx.commitmentTx.txid))?.isOutOfSlippage || false;
+
       // create ptx data
       const providerPtx = await PtxProvider.getProvider(asset);
-      await providerPtx.put(ptx.commitmentTx.txid, ptx);
+      await providerPtx.put(ptx.commitmentTx.txid, { ...ptx, isOutOfSlippage });
 
       // delete ctx mempool data
-      const providerMempool = await CtxMempoolProvider.getProvider(asset);
       await providerMempool.del(ptx.commitmentTx.txid);
 
       try {

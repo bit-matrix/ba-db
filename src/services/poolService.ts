@@ -2,7 +2,7 @@ import { Pool } from "@bitmatrix/models";
 import { PoolProvider } from "../providers/PoolProvider";
 import { calcTokenPrice, deepCopy } from "../utils/helper";
 
-export const poolBusiness = {
+export const poolService = {
   getPools: async () => {
     const provider = await PoolProvider.getProvider();
     const pools = await provider.getMany();
@@ -10,7 +10,7 @@ export const poolBusiness = {
     if (newPools.length > 0) {
       let sortedPools: Pool[] = [];
       let i: number = 0;
-      do {
+      while (i < newPools.length) {
         i++;
         if (newPools[i + 1] && newPools[i].quote.ticker === newPools[i + 1].quote.ticker && newPools[i].token.ticker === newPools[i + 1].token.ticker) {
           sortedPools = pools.sort((a, b) => {
@@ -25,7 +25,7 @@ export const poolBusiness = {
         } else {
           sortedPools = deepCopy(newPools);
         }
-      } while (i < newPools.length);
+      }
       return sortedPools;
     }
   },
@@ -37,11 +37,5 @@ export const poolBusiness = {
       const newPools = calcTokenPrice([pool]);
       return newPools[0];
     }
-  },
-
-  postPool: async (pool: Pool) => {
-    const provider = await PoolProvider.getProvider();
-    await provider.put(pool.id, pool);
-    return true;
   },
 };

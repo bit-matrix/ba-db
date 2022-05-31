@@ -6,7 +6,7 @@ export const deepCopy = <T>(original: T): T => {
 
 export const calcTokenPrice = (pools: Pool[]) => {
   const clonedPools = deepCopy(pools);
-  clonedPools.map((pool) => {
+  clonedPools.forEach((pool) => {
     if (pool.quote.ticker === "tL-BTC") {
       pool.tokenPrice = Number(pool.token.value) / Number(pool.quote.value);
     } else if (pool.quote.ticker === "tL-USDt") {

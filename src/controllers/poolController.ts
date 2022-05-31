@@ -1,10 +1,12 @@
+import { Pool } from "@bitmatrix/models";
 import { NextFunction, Request, Response } from "express";
-import { poolBusiness } from "../business/poolBusiness";
+import { PoolProvider } from "../providers/PoolProvider";
+import { poolService } from "../services/poolService";
 
 export const poolController = {
   getAll: async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const result = await poolBusiness.getPools();
+      const result = await poolService.getPools();
       return res.status(200).send(result);
     } catch (error) {
       return res.status(501).send({ status: false, error });
@@ -13,7 +15,7 @@ export const poolController = {
 
   get: async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const result = await poolBusiness.getPool(req.params.asset);
+      const result = await poolService.getPool(req.params.asset);
       return res.status(200).send(result);
     } catch (error) {
       return res.status(501).send({ status: false, error });
@@ -23,10 +25,13 @@ export const poolController = {
   post: async (req: Request, res: Response, next: NextFunction) => {
     try {
       if (req.body.id) {
-        const result = await poolBusiness.postPool(req.body);
-        return res.status(200).send({ status: result });
+        // await isPoolAsset(req.body.id);
+        const updatedPool = <Pool>req.body;
+        const provider = await PoolProvider.getProvider();
+        await provider.put(updatedPool.id, updatedPool);
+        return res.status(200).send({ status: true });
       } else {
-        return res.status(501).send({ status: false, error: "Pool id not found" });
+        return res.status(501).send({ status: false, error: "Pool not found" });
       }
     } catch (error) {
       return res.status(501).send({ status: false, error });

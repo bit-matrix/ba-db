@@ -9,7 +9,7 @@ import ctxRoutes from "./routes/ctxRoutes";
 import ptxRoutes from "./routes/ptxRoutes";
 import ptxCtxRoutes from "./routes/ptxCtxRoutes";
 import configRoutes from "./routes/configRoutes";
-import clearRoutes from "./routes/clearRoutes";
+import appSyncRoutes from "./routes/appSyncRoutes";
 
 const onExit = async () => {
   console.log("BA DB Service stopped.");
@@ -35,6 +35,7 @@ app.use("/ctx", ctxRoutes);
 app.use("/ptx", ptxRoutes);
 app.use("/ptx-ctx", ptxCtxRoutes);
 app.use("/config", configRoutes);
+app.use("/appSync", appSyncRoutes);
 // app.use("/clear", clearRoutes);
 
 initialDatas().then(() => {

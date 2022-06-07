@@ -1,13 +1,12 @@
 import { NextFunction, Request, Response } from "express";
 import { Pool } from "@bitmatrix/models";
 import { PoolProvider } from "../providers/PoolProvider";
-import { isPoolAsset } from "./common";
 
 export const poolController = {
   getAll: async (req: Request, res: Response, next: NextFunction) => {
     try {
       const provider = await PoolProvider.getProvider();
-      const result = await provider.getMany();
+      const result = await provider.getMany(50);
       return res.status(200).send(result);
     } catch (error) {
       return res.status(501).send({ status: false, error });

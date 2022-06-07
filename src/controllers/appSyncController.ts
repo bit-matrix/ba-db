@@ -7,8 +7,7 @@ export const appSyncController = {
     try {
       const provider = await AppSyncProvider.getProvider();
       const result = await provider.get(req.params.appId);
-      console.log(req.params.appId);
-      console.log(result);
+
       return res.status(200).send(result);
     } catch (error) {
       return res.status(501).send({ status: false, error });

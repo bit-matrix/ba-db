@@ -40,4 +40,14 @@ export const poolController = {
       return res.status(501).send({ status: false, error });
     }
   },
+
+  del: async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const provider = await PoolProvider.getProvider();
+      const result = await provider.delete(req.params.asset);
+      return res.status(200).send(result);
+    } catch (error) {
+      return res.status(501).send({ status: false, error });
+    }
+  },
 };

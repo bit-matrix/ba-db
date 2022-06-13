@@ -38,9 +38,7 @@ app.use("/config", configRoutes);
 app.use("/appSync", appSyncRoutes);
 // app.use("/clear", clearRoutes);
 
-initialDatas().then(() => {
-  server.listen(LISTEN_PORT, () => {
-    console.log("BA DB Service is using DATA_DIR:" + DATA_DIR);
-    console.log("BA DB Service started on *:" + LISTEN_PORT);
-  });
+server.listen(LISTEN_PORT, () => {
+  console.log("BA DB Service is using DATA_DIR:" + DATA_DIR);
+  console.log("BA DB Service started on *:" + LISTEN_PORT);
 });

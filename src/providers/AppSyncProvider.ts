@@ -1,6 +1,5 @@
 import rocksdb from "rocksdb";
 import { DATA_DIR } from "../env";
-import { Pool } from "@bitmatrix/models";
 import { RocksDbProvider } from "./RocksDbProvider";
 import { AppSync } from "../AppSync";
 

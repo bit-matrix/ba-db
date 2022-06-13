@@ -1,5 +1,4 @@
 import { NextFunction, Request, Response } from "express";
-import { initialDatas } from "../initialDatas";
 import { isPoolAsset } from "./common";
 import { CtxNewProvider } from "../providers/TxProviders/CtxNewProvider";
 import { CtxMempoolProvider } from "../providers/TxProviders/CtxMempoolProvider";
@@ -35,9 +34,6 @@ export const clearController = {
       // clear all ptx
       const ptxProvider = await PtxProvider.getProvider(asset);
       promises.push(ptxProvider.clear());
-
-      // initialpool data - config data
-      promises.push(initialDatas(lastSyncedBlockHeight));
 
       return Promise.all(promises)
         .then(() => {

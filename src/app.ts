@@ -1,7 +1,6 @@
 import http from "http";
 import express from "express";
 import cors from "cors";
-import { initialDatas } from "./initialDatas";
 import { DATA_DIR, LISTEN_PORT } from "./env";
 
 import poolRoutes from "./routes/poolRoutes";
@@ -10,6 +9,7 @@ import ptxRoutes from "./routes/ptxRoutes";
 import ptxCtxRoutes from "./routes/ptxCtxRoutes";
 import configRoutes from "./routes/configRoutes";
 import appSyncRoutes from "./routes/appSyncRoutes";
+import { appChecker } from "./appChecker";
 
 const onExit = async () => {
   console.log("BA DB Service stopped.");
@@ -38,7 +38,9 @@ app.use("/config", configRoutes);
 app.use("/appSync", appSyncRoutes);
 // app.use("/clear", clearRoutes);
 
-server.listen(LISTEN_PORT, () => {
-  console.log("BA DB Service is using DATA_DIR:" + DATA_DIR);
-  console.log("BA DB Service started on *:" + LISTEN_PORT);
+appChecker().then(() => {
+  server.listen(LISTEN_PORT, () => {
+    console.log("BA DB Service is using DATA_DIR:" + DATA_DIR);
+    console.log("BA DB Service started on *:" + LISTEN_PORT);
+  });
 });

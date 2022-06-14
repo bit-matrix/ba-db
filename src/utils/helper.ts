@@ -5,17 +5,26 @@ export const deepCopy = <T>(original: T): T => {
   return JSON.parse(JSON.stringify(original));
 };
 
-export const calcTokenPrice = (pools: Pool[]) => {
-  const clonedPools = deepCopy(pools);
-  clonedPools.forEach((pool) => {
-    if (pool.quote.assetHash === LBTC_ASSET_HASH) {
-      pool.tokenPrice = Number(pool.token.value) / Number(pool.quote.value);
-    } else if (pool.quote.assetHash === USDT_ASSET_HASH) {
-      pool.tokenPrice = Number(pool.quote.value) / Number(pool.token.value);
-    } else {
-      pool.tokenPrice = 0;
-    }
+export const calcPoolsTokenPrices = (pools: Pool[]) => {
+  const newPools = deepCopy(pools);
+
+  newPools.forEach((pool) => {
+    pool = calcTokenPrice(pool);
   });
 
-  return clonedPools;
+  return newPools;
+};
+
+export const calcTokenPrice = (pool: Pool) => {
+  const clonedPool = deepCopy(pool);
+
+  if (clonedPool.quote.assetHash === LBTC_ASSET_HASH) {
+    clonedPool.tokenPrice = Number(clonedPool.token.value) / Number(clonedPool.quote.value);
+  } else if (clonedPool.quote.assetHash === USDT_ASSET_HASH) {
+    clonedPool.tokenPrice = Number(clonedPool.quote.value) / Number(clonedPool.token.value);
+  } else {
+    clonedPool.tokenPrice = 0;
+  }
+
+  return clonedPool;
 };

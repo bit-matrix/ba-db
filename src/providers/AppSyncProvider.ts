@@ -1,7 +1,7 @@
 import rocksdb from "rocksdb";
 import { DATA_DIR } from "../env";
 import { RocksDbProvider } from "./RocksDbProvider";
-import { AppSync } from "../AppSync";
+import { AppSync } from "@bitmatrix/models";
 
 export class AppSyncProvider {
   private static location: string = DATA_DIR + "appsync";

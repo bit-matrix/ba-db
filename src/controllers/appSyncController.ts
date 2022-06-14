@@ -1,5 +1,5 @@
+import { AppSync } from "@bitmatrix/models";
 import { NextFunction, Request, Response } from "express";
-import { AppSync } from "../AppSync";
 import { AppSyncProvider } from "../providers/AppSyncProvider";
 
 export const appSyncController = {

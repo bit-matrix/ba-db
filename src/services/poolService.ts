@@ -1,11 +1,11 @@
 import { PoolProvider } from "../providers/PoolProvider";
-import { calcPoolsTokenPrices, calcTokenPrice } from "../utils/helper";
+import { calcTokenPrice } from "../utils/helper";
 
 export const poolService = {
   getPools: async () => {
     const provider = await PoolProvider.getProvider();
     const pools = await provider.getMany();
-    const newPools = calcPoolsTokenPrices(pools);
+    const newPools = calcTokenPrice(pools);
     return newPools;
   },
 
@@ -13,8 +13,8 @@ export const poolService = {
     const provider = await PoolProvider.getProvider();
     const pool = await provider.get(asset);
     if (pool) {
-      const newPool = calcTokenPrice(pool);
-      return newPool;
+      const newPool = calcTokenPrice([pool]);
+      return newPool[0];
     }
   },
 };

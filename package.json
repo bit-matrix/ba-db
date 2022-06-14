@@ -10,7 +10,7 @@
     "start": "node ./dist/app.js"
   },
   "dependencies": {
-    "@bitmatrix/models": "^1.0.0-1",
+    "@bitmatrix/models": "^1.0.0-2",
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "rocksdb": "^5.2.0"

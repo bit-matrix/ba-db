@@ -1,28 +1,37 @@
+import rocksdb from "rocksdb";
+import { DATA_DIR } from "../../env";
+import { RocksDbProvider } from "../RocksDbProvider";
 import { BmConfig } from "@bitmatrix/models";
-import { TxProviderBase } from "./TxProviderBase";
 
 export class ConfigProvider {
-  private static filename: string = "config";
+  private static location: string = DATA_DIR + "poolConfig";
+  private static _dbProvider: RocksDbProvider;
+  private static _provider: ConfigProvider;
+  private constructor() {}
 
-  private txProviderBase: TxProviderBase;
-  asset: string;
+  public static getProvider = async (): Promise<ConfigProvider> => {
+    if (ConfigProvider._provider === undefined) {
+      const db = rocksdb(this.location);
 
-  private constructor(asset: string, txProviderBase: TxProviderBase) {
-    this.asset = asset;
-    this.txProviderBase = txProviderBase;
-  }
+      const openPromise = new Promise<void>((resolve, reject) => {
+        db.open({ createIfMissing: true, errorIfExists: false }, (err) => {
+          if (err) {
+            console.error("BaseProvider.constructor.db.open.error", err);
+            reject(err);
+          }
+          resolve();
+        });
+      });
+      await openPromise;
 
-  public static getProvider = async (asset: string): Promise<ConfigProvider> => {
-    const txProviderBase = await TxProviderBase.getProvider(asset, ConfigProvider.filename);
-    const instance = new ConfigProvider(asset, txProviderBase);
-    return instance;
+      ConfigProvider._dbProvider = new RocksDbProvider(db);
+      ConfigProvider._provider = new ConfigProvider();
+    }
+
+    return ConfigProvider._provider;
   };
 
-  get = async (key: string): Promise<BmConfig | undefined> => this.txProviderBase.get<BmConfig>(this.asset + "__" + ConfigProvider.filename, key);
-  put = async (key: string, value: BmConfig): Promise<void> => this.txProviderBase.put<BmConfig>(this.asset + "__" + ConfigProvider.filename, key, value);
-  getMany = async (limit = 10, reverse = true): Promise<BmConfig[]> => {
-    const result = await this.txProviderBase.getMany<BmConfig>(this.asset + "__" + ConfigProvider.filename, limit, reverse);
-    return result.map((r) => r.val) || [];
-  };
-  clear = async (): Promise<void> => this.txProviderBase.deleteAll(this.asset + "__" + ConfigProvider.filename);
+  get = async (key: string): Promise<BmConfig | undefined> => ConfigProvider._dbProvider.get<BmConfig>(key);
+
+  put = async (key: string, value: BmConfig): Promise<void> => ConfigProvider._dbProvider.put<BmConfig>(key, value);
 }

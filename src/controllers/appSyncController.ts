@@ -19,12 +19,6 @@ export const appSyncController = {
       const newState = <AppSync>req.body;
       const provider = await AppSyncProvider.getProvider();
 
-      const isExist = await provider.get("testnetbitmatrix");
-
-      if (isExist) {
-        return res.status(501).send({ status: false, error: "App is currently exist" });
-      }
-
       await provider.put("testnetbitmatrix", newState);
       return res.status(200).send({ status: true });
     } catch (error) {

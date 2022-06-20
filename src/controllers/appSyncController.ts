@@ -6,7 +6,7 @@ export const appSyncController = {
   get: async (req: Request, res: Response, next: NextFunction) => {
     try {
       const provider = await AppSyncProvider.getProvider();
-      const result = await provider.get(req.params.appId);
+      const result = await provider.get("testnetbitmatrix");
 
       return res.status(200).send(result);
     } catch (error) {
@@ -16,15 +16,17 @@ export const appSyncController = {
 
   post: async (req: Request, res: Response, next: NextFunction) => {
     try {
-      if (req.body.id) {
-        const newState = <AppSync>req.body;
-        const provider = await AppSyncProvider.getProvider();
+      const newState = <AppSync>req.body;
+      const provider = await AppSyncProvider.getProvider();
 
-        await provider.put(newState.id, newState);
-        return res.status(200).send({ status: true });
-      } else {
-        return res.status(501).send({ status: false, error: "App id not found" });
+      const isExist = await provider.get("testnetbitmatrix");
+
+      if (isExist) {
+        return res.status(501).send({ status: false, error: "App is currently exist" });
       }
+
+      await provider.put("testnetbitmatrix", newState);
+      return res.status(200).send({ status: true });
     } catch (error) {
       return res.status(501).send({ status: false, error });
     }

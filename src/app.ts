@@ -7,11 +7,9 @@ import poolRoutes from "./routes/poolRoutes";
 import ctxRoutes from "./routes/ctxRoutes";
 import ptxRoutes from "./routes/ptxRoutes";
 import ptxCtxRoutes from "./routes/ptxCtxRoutes";
-import configRoutes from "./routes/configRoutes";
 import appSyncRoutes from "./routes/appSyncRoutes";
 import { Server } from "socket.io";
 import { appChecker } from "./appChecker";
-import { PoolProvider } from "./providers/PoolProvider";
 import { poolService } from "./services/poolService";
 
 const onExit = async () => {
@@ -51,7 +49,6 @@ app.use("/pools", poolRoutes);
 app.use("/ctx", ctxRoutes);
 app.use("/ptx", ptxRoutes);
 app.use("/ptx-ctx", ptxCtxRoutes);
-app.use("/config", configRoutes);
 app.use("/appSync", appSyncRoutes);
 // app.use("/clear", clearRoutes);
 

@@ -59,6 +59,27 @@ setInterval(async () => {
   io.emit("pools", pools);
 }, 5000);
 
+io.on("checkTxStatus", (txIds: string[]) => {
+  enum TX_STATUS {
+    PENDING,
+    WAITING_PTX,
+    WAITING_PTX_CONFIRM,
+    SUCCESS,
+    FAILED,
+  }
+
+  const txStatuses = txIds.map((tx) => {
+    return {
+      txId: tx,
+      poolTxId: "",
+      status: TX_STATUS.PENDING,
+      timestamp: Math.floor(Date.now() / 1000),
+    };
+  });
+
+  io.emit("checkTxStatusResponse", txStatuses);
+});
+
 appChecker().then(() => {
   server.listen(LISTEN_PORT, () => {
     console.log("BA DB Service is using DATA_DIR:" + DATA_DIR);

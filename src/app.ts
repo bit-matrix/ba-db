@@ -36,6 +36,30 @@ const io = new Server(server, {
 
 io.on("connection", (socket) => {
   console.log("a user connected");
+
+  socket.on("checkTxStatus", (txIds) => {
+    const txIdsArr = txIds.split(",");
+
+    enum TX_STATUS {
+      PENDING,
+      WAITING_PTX,
+      WAITING_PTX_CONFIRM,
+      SUCCESS,
+      FAILED,
+    }
+
+    const txStatuses = txIdsArr.map((tx: any) => {
+      return {
+        txId: tx,
+        poolTxId: "",
+        status: TX_STATUS.PENDING,
+        timestamp: Math.floor(Date.now() / 1000),
+      };
+    });
+
+    socket.emit("checkTxStatusResponse", txStatuses);
+  });
+
   socket.on("disconnect", () => {
     console.log("user disconnected");
   });
@@ -58,27 +82,6 @@ setInterval(async () => {
 
   io.emit("pools", pools);
 }, 5000);
-
-io.on("checkTxStatus", (txIds: string[]) => {
-  enum TX_STATUS {
-    PENDING,
-    WAITING_PTX,
-    WAITING_PTX_CONFIRM,
-    SUCCESS,
-    FAILED,
-  }
-
-  const txStatuses = txIds.map((tx) => {
-    return {
-      txId: tx,
-      poolTxId: "",
-      status: TX_STATUS.PENDING,
-      timestamp: Math.floor(Date.now() / 1000),
-    };
-  });
-
-  io.emit("checkTxStatusResponse", txStatuses);
-});
 
 appChecker().then(() => {
   server.listen(LISTEN_PORT, () => {

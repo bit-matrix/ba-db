@@ -34,8 +34,12 @@ const io = new Server(server, {
   },
 });
 
-io.on("connection", (socket) => {
+io.on("connection", async (socket) => {
   console.log("a user connected");
+
+  const pools = await poolService.getPools();
+
+  socket.emit("pools", pools);
 
   socket.on("checkTxStatus", (txIds) => {
     const txIdsArr = txIds.split(",");
@@ -75,13 +79,6 @@ app.use("/ptx", ptxRoutes);
 app.use("/ptx-ctx", ptxCtxRoutes);
 app.use("/appSync", appSyncRoutes);
 // app.use("/clear", clearRoutes);
-
-// test uri
-setInterval(async () => {
-  const pools = await poolService.getPools();
-
-  io.emit("pools", pools);
-}, 5000);
 
 appChecker().then(() => {
   server.listen(LISTEN_PORT, () => {

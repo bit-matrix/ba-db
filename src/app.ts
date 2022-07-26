@@ -4,9 +4,6 @@ import cors from "cors";
 import { DATA_DIR, LISTEN_PORT } from "./env";
 
 import poolRoutes from "./routes/poolRoutes";
-import ctxRoutes from "./routes/ctxRoutes";
-import ptxRoutes from "./routes/ptxRoutes";
-import ptxCtxRoutes from "./routes/ptxCtxRoutes";
 import appSyncRoutes from "./routes/appSyncRoutes";
 import { Server } from "socket.io";
 import { appChecker } from "./appChecker";
@@ -74,9 +71,6 @@ app.get("/", async (req, res, next) => {
 });
 
 app.use("/pools", poolRoutes);
-app.use("/ctx", ctxRoutes);
-app.use("/ptx", ptxRoutes);
-app.use("/ptx-ctx", ptxCtxRoutes);
 app.use("/appSync", appSyncRoutes);
 // app.use("/clear", clearRoutes);
 

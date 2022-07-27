@@ -4,8 +4,7 @@ mkdir /root/github/bit-matrix/new-pool
 cd /root/github/bit-matrix/new-pool
 git clone https://github.com/bit-matrix/ba-db.git
 cd ba-db
-git checkout -b new-pool
-git branch --set-upstream-to=origin/new-pool new-pool
+git branch --set-upstream-to=origin
 git pull
 
 mkdir /var/lib/docker/volumes/DataVolume1/\_data/new-pool
@@ -23,7 +22,7 @@ ls /var/lib/docker/volumes/DataVolume1/\_data/new-pool
 
 ## build
 
-docker build -t ba-db-new-pool .
+docker build -t ba-db .
 
 ## run
 

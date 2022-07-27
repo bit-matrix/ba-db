@@ -1,24 +1,24 @@
 # Install
 
-mkdir /root/github/bit-matrix/new-pool
-cd /root/github/bit-matrix/new-pool
+mkdir /root/github/bit-matrix
+cd /root/github/bit-matrix
 git clone https://github.com/bit-matrix/ba-db.git
 cd ba-db
 git branch --set-upstream-to=origin
 git pull
 
-mkdir /var/lib/docker/volumes/DataVolume1/\_data/new-pool
+mkdir /var/lib/docker/volumes/DataVolume1/\_data
 
 # Update
 
-cd /root/github/bit-matrix/new-pool/ba-db
+cd /root/github/bit-matrix/ba-db
 git pull
-docker build -t ba-db-new-pool .
-docker run -d -p 4499:4499 -v DataVolume1:/datavolume1 ba-db-new-pool
+docker build -t ba-db .
+docker run -d -p 4499:4499 -v DataVolume1:/datavolume1 ba-db
 
 ## List db files
 
-ls /var/lib/docker/volumes/DataVolume1/\_data/new-pool
+ls /var/lib/docker/volumes/DataVolume1/\_data
 
 ## build
 
@@ -26,15 +26,15 @@ docker build -t ba-db .
 
 ## run
 
-docker run -d -p 4499:4499 -v DataVolume1:/datavolume1 ba-db-new-pool
+docker run -d -p 4499:4499 -v DataVolume1:/datavolume1 ba-db
 
 ## run interactive
 
-docker run -it -p 4499:4499 -v DataVolume1:/datavolume1 ba-db-new-pool
+docker run -it -p 4499:4499 -v DataVolume1:/datavolume1 ba-db
 
 ## run interactive, remove when stop
 
-docker run -it --rm -p 4499:4499 -v DataVolume1:/datavolume1 ba-db-new-pool
+docker run -it --rm -p 4499:4499 -v DataVolume1:/datavolume1 ba-db
 
 ## image list
 

@@ -5,6 +5,6 @@ const poolRoutes = Router();
 
 poolRoutes.route("/").get(poolController.getAll).post(poolController.post);
 
-poolRoutes.route("/:asset").get(poolController.get);
+poolRoutes.route("/:asset").get(poolController.get).delete(poolController.del);
 
 export default poolRoutes;

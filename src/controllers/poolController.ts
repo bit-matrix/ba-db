@@ -1,5 +1,6 @@
 import { Pool } from "@bitmatrix/models";
 import { NextFunction, Request, Response } from "express";
+import { BitmatrixSocket } from "../lib/BitmatrixSocket";
 import { PoolProvider } from "../providers/PoolProvider";
 import { poolService } from "../services/poolService";
 
@@ -7,6 +8,7 @@ export const poolController = {
   getAll: async (req: Request, res: Response, next: NextFunction) => {
     try {
       const result = await poolService.getPools();
+
       return res.status(200).send(result);
     } catch (error) {
       return res.status(501).send({ status: false, error });
@@ -16,6 +18,7 @@ export const poolController = {
   get: async (req: Request, res: Response, next: NextFunction) => {
     try {
       const result = await poolService.getPool(req.params.asset);
+
       return res.status(200).send(result);
     } catch (error) {
       return res.status(501).send({ status: false, error });
@@ -29,6 +32,11 @@ export const poolController = {
         const updatedPool = <Pool>req.body;
         const provider = await PoolProvider.getProvider();
         await provider.put(updatedPool.id, updatedPool);
+
+        const bitmatrixSocket = BitmatrixSocket.getInstance();
+        const newPools = await provider.getMany();
+        bitmatrixSocket.currentSocket?.emit("pools", newPools);
+
         return res.status(200).send({ status: true });
       } else {
         return res.status(501).send({ status: false, error: "Pool not found" });

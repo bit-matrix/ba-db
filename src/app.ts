@@ -5,9 +5,8 @@ import { DATA_DIR, LISTEN_PORT } from "./env";
 
 import poolRoutes from "./routes/poolRoutes";
 import appSyncRoutes from "./routes/appSyncRoutes";
-import { Server } from "socket.io";
 import { appChecker } from "./appChecker";
-import { poolService } from "./services/poolService";
+import { BitmatrixSocket } from "./lib/BitmatrixSocket";
 
 const onExit = async () => {
   console.log("BA DB Service stopped.");
@@ -24,47 +23,7 @@ app.use(cors());
 
 const server = http.createServer(app);
 
-const io = new Server(server, {
-  cors: {
-    origin: "http://localhost:3000",
-    methods: ["GET", "POST"],
-  },
-});
-
-io.on("connection", async (socket) => {
-  console.log("a user connected");
-
-  const pools = await poolService.getPools();
-
-  socket.emit("pools", pools);
-
-  socket.on("checkTxStatus", (txIds) => {
-    const txIdsArr = txIds.split(",");
-
-    enum TX_STATUS {
-      PENDING,
-      WAITING_PTX,
-      WAITING_PTX_CONFIRM,
-      SUCCESS,
-      FAILED,
-    }
-
-    const txStatuses = txIdsArr.map((tx: any) => {
-      return {
-        txId: tx,
-        poolTxId: "",
-        status: TX_STATUS.PENDING,
-        timestamp: Math.floor(Date.now() / 1000),
-      };
-    });
-
-    socket.emit("checkTxStatusResponse", txStatuses);
-  });
-
-  socket.on("disconnect", () => {
-    console.log("user disconnected");
-  });
-});
+BitmatrixSocket.getInstance(server);
 
 app.get("/", async (req, res, next) => {
   res.send("hello from ba-db");

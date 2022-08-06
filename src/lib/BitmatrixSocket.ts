@@ -29,10 +29,10 @@ export class BitmatrixSocket {
   }
 
   private connect = () => {
-    this.io.on("connection", (socket) => {
+    this.io.on("connection", async (socket) => {
       console.log("a user connected");
 
-      const pools = poolService.getPools();
+      const pools = await poolService.getPools();
 
       socket.emit("pools", pools);
 

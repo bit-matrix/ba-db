@@ -12,7 +12,7 @@ export class BitmatrixSocket {
   constructor(server: HttpServer) {
     this.io = new Server(server, {
       cors: {
-        origin: "http://localhost:3000",
+        origin: "*",
         methods: ["GET", "POST"],
       },
     });

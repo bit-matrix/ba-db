@@ -35,8 +35,8 @@ export class PoolProvider {
 
   delete = async (key: string): Promise<void> => PoolProvider._dbProvider.del(key);
 
-  getMany = async (limit = 1000, reverse = true): Promise<Pool[]> => {
-    const result = await PoolProvider._dbProvider.getMany<Pool>(limit, reverse);
+  getMany = async (): Promise<Pool[]> => {
+    const result = await PoolProvider._dbProvider.getMany<Pool>();
     return result.map((r) => r.val) || [];
   };
 }

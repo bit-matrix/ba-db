@@ -28,7 +28,6 @@ export const poolController = {
   post: async (req: Request, res: Response, next: NextFunction) => {
     try {
       if (req.body.id) {
-        // await isPoolAsset(req.body.id);
         const updatedPool = <Pool>req.body;
         const provider = await PoolProvider.getProvider();
         await provider.put(updatedPool.id, updatedPool);

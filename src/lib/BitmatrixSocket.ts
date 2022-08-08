@@ -2,7 +2,6 @@ import { Server, Socket } from "socket.io";
 import { Server as HttpServer } from "http";
 import { DefaultEventsMap } from "socket.io/dist/typed-events";
 import { poolService } from "../services/poolService";
-import { calcTokenPrice } from "../utils/helper";
 
 export class BitmatrixSocket {
   private io: Server;
@@ -34,9 +33,8 @@ export class BitmatrixSocket {
       console.log("a user connected");
 
       const pools = await poolService.getPools();
-      const newPools = calcTokenPrice(pools);
 
-      socket.emit("pools", newPools);
+      socket.emit("pools", pools);
 
       this.currentSocket = socket;
 

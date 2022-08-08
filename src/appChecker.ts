@@ -10,8 +10,8 @@ export const appChecker = async () => {
     return true;
   } else {
     const dummyApp: AppSync = {
-      blockHash: "ef2237f71b5cfbd0c07d821461bcdc3df72fb0ac331a8711a259a9d7f58c1a9a",
-      blockHeight: 456211,
+      blockHash: "396a0a297967a4828e8d0b467a746b5f5028a71367466df0c353f9e2f3dcebf3",
+      blockHeight: 466226,
       synced: false,
     };
 

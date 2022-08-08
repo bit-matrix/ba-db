@@ -3,6 +3,7 @@ import { NextFunction, Request, Response } from "express";
 import { BitmatrixSocket } from "../lib/BitmatrixSocket";
 import { PoolProvider } from "../providers/PoolProvider";
 import { poolService } from "../services/poolService";
+import { calcTokenPrice } from "../utils/helper";
 
 export const poolController = {
   getAll: async (req: Request, res: Response, next: NextFunction) => {
@@ -35,7 +36,8 @@ export const poolController = {
 
         const bitmatrixSocket = BitmatrixSocket.getInstance();
         const newPools = await provider.getMany();
-        bitmatrixSocket.currentSocket?.emit("pools", newPools);
+        const newPoolsWithPrice = calcTokenPrice(newPools);
+        bitmatrixSocket.currentSocket?.emit("pools", newPoolsWithPrice);
 
         return res.status(200).send({ status: true });
       } else {

@@ -13,8 +13,8 @@ mkdir /var/lib/docker/volumes/DataVolume1v2/\_data
 
 cd /root/github/bit-matrix/ba-db
 git pull
-docker build -t ba-db .
-docker run -d -p 4450:4450 -v DataVolume1v2:/datavolume1v2 ba-db
+docker build -t ba-db-v2 .
+docker run -d -p 4450:4450 -v DataVolume1v2:/datavolume1v2 ba-db-v2
 
 ## List db files
 

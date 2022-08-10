@@ -34,7 +34,7 @@ export const poolController = {
 
         const bitmatrixSocket = BitmatrixSocket.getInstance();
         const newPools = await provider.getMany();
-        bitmatrixSocket.currentSocket?.emit("pools", newPools);
+        bitmatrixSocket.io.sockets.emit("pools", newPools);
 
         return res.status(200).send({ status: true });
       } else {

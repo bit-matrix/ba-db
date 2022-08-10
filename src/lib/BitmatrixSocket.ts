@@ -4,10 +4,8 @@ import { DefaultEventsMap } from "socket.io/dist/typed-events";
 import { poolService } from "../services/poolService";
 
 export class BitmatrixSocket {
-  private io: Server;
+  io: Server;
   private static instance: BitmatrixSocket;
-
-  currentSocket?: Socket<DefaultEventsMap, DefaultEventsMap, DefaultEventsMap, any>;
 
   constructor(server: HttpServer) {
     this.io = new Server(server, {
@@ -35,8 +33,6 @@ export class BitmatrixSocket {
       const pools = await poolService.getPools();
 
       socket.emit("pools", pools);
-
-      this.currentSocket = socket;
 
       socket.on("disconnect", () => {
         console.log("user disconnected");

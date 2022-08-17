@@ -2,6 +2,7 @@ import { Server, Socket } from "socket.io";
 import { Server as HttpServer } from "http";
 import { DefaultEventsMap } from "socket.io/dist/typed-events";
 import { poolService } from "../services/poolService";
+import { AppSyncProvider } from "../providers/AppSyncProvider";
 
 export class BitmatrixSocket {
   io: Server;
@@ -33,6 +34,11 @@ export class BitmatrixSocket {
       const pools = await poolService.getPools();
 
       socket.emit("pools", pools);
+
+      const appProvider = await AppSyncProvider.getProvider();
+      const appSync = await appProvider.get("testnetbitmatrix");
+
+      socket.emit("appSync", appSync);
 
       socket.on("disconnect", () => {
         console.log("user disconnected");

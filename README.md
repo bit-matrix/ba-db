@@ -22,19 +22,19 @@ ls /var/lib/docker/volumes/DataVolume1v2/\_data
 
 ## build
 
-docker build -t ba-db .
+docker build -t ba-db-v2 .
 
 ## run
 
-docker run -d -p 4450:4450 -v DataVolume1v2:/datavolume1v2 ba-db
+docker run -d -p 4450:4450 -v DataVolume1v2:/datavolume1v2 ba-db-v2
 
 ## run interactive
 
-docker run -it -p 4450:4450 -v DataVolume1v2:/datavolume1v2 ba-db
+docker run -it -p 4450:4450 -v DataVolume1v2:/datavolume1v2 ba-db-v2
 
 ## run interactive, remove when stop
 
-docker run -it --rm -p 4450:4450 -v DataVolume1v2:/datavolume1v2 ba-db
+docker run -it --rm -p 4450:4450 -v DataVolume1v2:/datavolume1v2 ba-db-v2
 
 ## image list
 

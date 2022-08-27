@@ -7,18 +7,18 @@ cd ba-db
 git branch --set-upstream-to=origin
 git pull
 
-mkdir /var/lib/docker/volumes/DataVolume1Bmx/\_data
+mkdir /var/lib/docker/volumes/DataVolumeMulti/\_data
 
 # Update
 
 cd /root/github/bit-matrix/ba-db
 git pull
 docker build -t ba-db .
-docker run -d -p 4499:4499 -v DataVolume1Bmx:/datavolume1bmx ba-db
+docker run -d -p 4499:4499 -v DataVolumeMulti:/datavolumemulti ba-db
 
 ## List db files
 
-ls /var/lib/docker/volumes/DataVolume1Bmx/\_data
+ls /var/lib/docker/volumes/DataVolumeMulti/\_data
 
 ## build
 
@@ -26,15 +26,15 @@ docker build -t ba-db .
 
 ## run
 
-docker run -d -p 4499:4499 -v DataVolume1Bmx:/datavolume1bmx ba-db
+docker run -d -p 4499:4499 -v DataVolumeMulti:/datavolumemulti ba-db
 
 ## run interactive
 
-docker run -it -p 4499:4499 -v DataVolume1Bmx:/datavolume1bmx ba-db
+docker run -it -p 4499:4499 -v DataVolumeMulti:/datavolumemulti ba-db
 
 ## run interactive, remove when stop
 
-docker run -it --rm -p 4499:4499 -v DataVolume1Bmx:/datavolume1bmx ba-db
+docker run -it --rm -p 4499:4499 -v DataVolumeMulti:/datavolumemulti ba-db
 
 ## image list
 

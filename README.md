@@ -14,7 +14,7 @@ mkdir /var/lib/docker/volumes/DataVolumeMulti/\_data
 cd /root/github/bit-matrix/ba-db
 git pull
 docker build -t ba-db .
-docker run -d -p 4499:4499 -v DataVolumeMulti:/datavolumemulti ba-db
+docker run -d -p 8001:8001 -v DataVolumeMulti:/datavolumemulti ba-db
 
 ## List db files
 
@@ -26,15 +26,15 @@ docker build -t ba-db .
 
 ## run
 
-docker run -d -p 4499:4499 -v DataVolumeMulti:/datavolumemulti ba-db
+docker run -d -p 8001:8001 -v DataVolumeMulti:/datavolumemulti ba-db
 
 ## run interactive
 
-docker run -it -p 4499:4499 -v DataVolumeMulti:/datavolumemulti ba-db
+docker run -it -p 8001:8001 -v DataVolumeMulti:/datavolumemulti ba-db
 
 ## run interactive, remove when stop
 
-docker run -it --rm -p 4499:4499 -v DataVolumeMulti:/datavolumemulti ba-db
+docker run -it --rm -p 8001:8001 -v DataVolumeMulti:/datavolumemulti ba-db
 
 ## image list
 

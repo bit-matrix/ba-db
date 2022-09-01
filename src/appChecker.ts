@@ -1,22 +1,15 @@
-import { AppSync } from "@bitmatrix/models";
+import { APP_NAME, INITIAL_BLOCK } from "./env";
 import { AppSyncProvider } from "./providers/AppSyncProvider";
 
 export const appChecker = async () => {
   const provider = await AppSyncProvider.getProvider();
 
-  const result = await provider.get("testnetbitmatrix");
+  const result = await provider.get(APP_NAME);
 
   if (result) {
     return true;
   } else {
-    const dummyApp: AppSync = {
-      bestBlockHeight: 493457,
-      blockHash: "59d00accd70275b67ba152480de43de47f988ed6cc260d37212410c80f95087d",
-      blockHeight: 493457,
-      synced: false,
-    };
-
-    await provider.put("testnetbitmatrix", dummyApp);
+    await provider.put(APP_NAME, INITIAL_BLOCK);
 
     return true;
   }

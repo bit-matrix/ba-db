@@ -1,8 +1,8 @@
-import { Server, Socket } from "socket.io";
+import { Server } from "socket.io";
 import { Server as HttpServer } from "http";
-import { DefaultEventsMap } from "socket.io/dist/typed-events";
 import { poolService } from "../services/poolService";
 import { AppSyncProvider } from "../providers/AppSyncProvider";
+import { APP_NAME } from "../env";
 
 export class BitmatrixSocket {
   io: Server;
@@ -36,7 +36,7 @@ export class BitmatrixSocket {
       socket.emit("pools", pools);
 
       const appProvider = await AppSyncProvider.getProvider();
-      const appSync = await appProvider.get("testnetbitmatrix");
+      const appSync = await appProvider.get(APP_NAME);
 
       socket.emit("appSync", appSync);
 

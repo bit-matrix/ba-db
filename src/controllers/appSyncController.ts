@@ -1,5 +1,6 @@
 import { AppSync } from "@bitmatrix/models";
 import { NextFunction, Request, Response } from "express";
+import { APP_NAME } from "../env";
 import { BitmatrixSocket } from "../lib/BitmatrixSocket";
 import { AppSyncProvider } from "../providers/AppSyncProvider";
 
@@ -7,7 +8,7 @@ export const appSyncController = {
   get: async (req: Request, res: Response, next: NextFunction) => {
     try {
       const provider = await AppSyncProvider.getProvider();
-      const result = await provider.get("testnetbitmatrix");
+      const result = await provider.get(APP_NAME);
 
       return res.status(200).send(result);
     } catch (error) {
@@ -20,7 +21,7 @@ export const appSyncController = {
       const newState = <AppSync>req.body;
       const provider = await AppSyncProvider.getProvider();
 
-      await provider.put("testnetbitmatrix", newState);
+      await provider.put(APP_NAME, newState);
 
       const bitmatrixSocket = BitmatrixSocket.getInstance();
       bitmatrixSocket.io.sockets.emit("appSync", newState);

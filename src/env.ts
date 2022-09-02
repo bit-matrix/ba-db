@@ -1,9 +1,10 @@
 import { AppSync } from "@bitmatrix/models";
 
-const db_port = process.env.DB_PORT || "8001";
+const db_internal_port = process.env.DB_INTERNAL_PORT || "4499";
+const db_internal_data_dir = process.env.DB_INTERNAL_DATA_DIR || "data_dir";
 
-export const DATA_DIR: string = (process.env.API_INTERNAL_DATA_DIR || "/datavolumemulti") + "/";
-export const LISTEN_PORT: number = Number(db_port);
+export const DATA_DIR: string = db_internal_data_dir + "/";
+export const LISTEN_PORT: number = Number(db_internal_port);
 
 export const APP_NAME: string = "testnetbitmatrix";
 

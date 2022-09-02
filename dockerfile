@@ -38,24 +38,29 @@ RUN cd /tmp && \
     rm -R /tmp/rocksdb/
 
 
-# create root application folder
-WORKDIR /ba-db
-RUN mkdir /ba-db/data-dir
+ARG DB_INTERNAL_DATA_DIR
+ENV DATA_DIR $DB_INTERNAL_DATA_DIR
 
-# copy configs to /ba-db folder
+# create root application folder
+WORKDIR /db
+RUN mkdir $DATA_DIR
+
+# copy configs to /db folder
 COPY package*.json ./
 COPY tsconfig.json ./
 COPY babel.config.js ./
 
-# copy source code to /ba-db/src folder
+# copy source code to /db/src folder
 COPY src ./src
 
 # check files list
 RUN ls -a
-   
+
 RUN npm install
 RUN npm run build
 
-EXPOSE 8899
+EXPOSE 4499
+STOPSIGNAL SIGINT
 
 CMD ["npm", "start"]
+

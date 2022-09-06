@@ -10,7 +10,6 @@ export const appChecker = async () => {
     return true;
   } else {
     await provider.put(APP_NAME, INITIAL_BLOCK);
-
     return true;
   }
 };

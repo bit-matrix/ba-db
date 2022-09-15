@@ -9,8 +9,8 @@ export const LISTEN_PORT: number = Number(db_internal_port);
 export const APP_NAME: string = "mainnetbitmatrix";
 
 export const INITIAL_BLOCK: AppSync = {
-  bestBlockHeight: 2009168,
-  blockHash: "666da645fd5c2e759fbd05e21d5ef5e7d0d49441d9707caf575146ef4ecc7998",
-  blockHeight: 2009168,
+  bestBlockHeight: 2009615,
+  blockHash: "39d3539cf26b0589c8365c82da91850c4127d9334827b8bed904a83c1db0cd06",
+  blockHeight: 2009615,
   synced: false,
 };
